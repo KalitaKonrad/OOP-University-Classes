@@ -1,15 +1,27 @@
 package com.company;
 
 public class Matrix {
-    double[] data;
-    int rows;
-    int cols;
+    private double[] data;
+    private int rows;
+    private int cols;
 
     Matrix(int rows, int cols) {
         this.rows = rows;
         this.cols = cols;
         data = new double[rows * cols];
     }
+    public int getRows() {
+        return rows;
+    }
+
+    public int getCols() {
+        return cols;
+    }
+
+    public double[] getData() {
+        return data;
+    }
+
 
     // 2.1
     Matrix(double[][] d) {
@@ -66,6 +78,9 @@ public class Matrix {
         data[r * rows + c] = value;
     }
 
+    public void setData(double[] data) {
+        this.data = data;
+    }
     //2.4
     @Override
     public String toString() {
@@ -96,9 +111,34 @@ public class Matrix {
     }
 
     //2.6
-
+    public int[] shape() {
+        int[] result = new int[2];
+        result[0] = rows;
+        result[1] = cols;
+        return result;
+    }
     //2.7
-    public void add(Matrix m) {
-        System.out.println(getValue(1,1) + ", " + this.getValue(1,1)); // SAAAY WHAAAT?
+    public Matrix add(Matrix m) throws Exception {
+        try {
+            if (this.rows != m.getRows() || this.cols != m.getCols())  {
+                throw new Exception();
+            }
+        }
+       catch(Exception e) {
+            e.printStackTrace();
+       }
+        Matrix newMatrix = new Matrix(rows, cols);
+
+        int matrixLength = rows * cols;
+        double[] newMatrixData = newMatrix.getData();
+        double[] thisMatrixData = this.getData();
+        double[] mMatrixData = m.getData();
+
+        for (int i = 0; i < matrixLength; i++) {
+            newMatrixData[i] = thisMatrixData[i] + mMatrixData[i];
+        }
+
+        newMatrix.setData(newMatrixData);
+        return newMatrix;
     }
 }
