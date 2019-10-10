@@ -117,21 +117,64 @@ public class Matrix {
         result[1] = cols;
         return result;
     }
-    //2.7
+
+    //2.7 && 2.8
     public Matrix add(Matrix m) {
         return getMatrix(m, "add");
+    }
+
+    public Matrix add(double w) {
+        return getMatrix(w, "add");
     }
 
     public Matrix sub(Matrix m) {
         return getMatrix(m, "sub");
     }
 
+    public Matrix sub(double w) {
+        return getMatrix(w, "sub");
+    }
+
     public Matrix mul(Matrix m) {
         return getMatrix(m, "mul");
     }
 
+    public Matrix mul(double w) {
+        return getMatrix(w, "mul");
+    }
+
     public Matrix div(Matrix m) {
         return getMatrix(m, "div");
+    }
+
+    public Matrix div(double w) {
+        return getMatrix(w, "div");
+    }
+
+    private Matrix getMatrix(double w, String action) {
+        int matrixLength = cols * rows;
+        Matrix newMatrix = new Matrix(rows, cols);
+        double[] currentMatrixData = getData();
+
+        for (int i = 0; i < matrixLength; i++) {
+            switch (action) {
+                case "add":
+                    currentMatrixData[i] += w;
+                    break;
+                case "sub":
+                    currentMatrixData[i] -= w;
+                    break;
+                case "mul":
+                    currentMatrixData[i] *= w;
+                    break;
+                case "div":
+                    currentMatrixData[i] /= w;
+                    break;
+             }
+        }
+
+        newMatrix.setData(currentMatrixData);
+        return newMatrix;
     }
 
     private Matrix getMatrix(Matrix m, String action) {
@@ -170,4 +213,18 @@ public class Matrix {
         newMatrix.setData(newMatrixData);
         return newMatrix;
     }
+/*
+    // 2.9
+    Matrix dot(Matrix m) {
+        try {
+            if (this.cols != m.getRows()) {
+                throw new Exception();
+            }
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+
+
+    }*/
 }
