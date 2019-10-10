@@ -118,15 +118,31 @@ public class Matrix {
         return result;
     }
     //2.7
-    public Matrix add(Matrix m) throws Exception {
+    public Matrix add(Matrix m) {
+        return getMatrix(m, "add");
+    }
+
+    public Matrix sub(Matrix m) {
+        return getMatrix(m, "sub");
+    }
+
+    public Matrix mul(Matrix m) {
+        return getMatrix(m, "mul");
+    }
+
+    public Matrix div(Matrix m) {
+        return getMatrix(m, "div");
+    }
+
+    private Matrix getMatrix(Matrix m, String action) {
         try {
             if (this.rows != m.getRows() || this.cols != m.getCols())  {
                 throw new Exception();
             }
         }
-       catch(Exception e) {
+        catch(Exception e) {
             e.printStackTrace();
-       }
+        }
         Matrix newMatrix = new Matrix(rows, cols);
 
         int matrixLength = rows * cols;
@@ -135,7 +151,20 @@ public class Matrix {
         double[] mMatrixData = m.getData();
 
         for (int i = 0; i < matrixLength; i++) {
-            newMatrixData[i] = thisMatrixData[i] + mMatrixData[i];
+            switch (action) {
+                case "add":
+                    newMatrixData[i] = thisMatrixData[i] + mMatrixData[i];
+                    break;
+                case "sub":
+                    newMatrixData[i] = thisMatrixData[i] - mMatrixData[i];
+                    break;
+                case "mul":
+                    newMatrixData[i] = thisMatrixData[i] * mMatrixData[i];
+                    break;
+                case "div":
+                    newMatrixData[i] = thisMatrixData[i] / mMatrixData[i];
+                    break;
+            }
         }
 
         newMatrix.setData(newMatrixData);
