@@ -20,9 +20,13 @@ public class Main {
         //System.out.println(m.div(m));
 //        m.reshape(4,5);
 
-        Matrix A = new Matrix(new double[][]{{2,3,1}, {2,-7,4}});
-        Matrix B = new Matrix(new double[][]{{3,4,5}, {1,1,4}, {2,1,4}});
-        System.out.println(A.dot(B).toString());
+        Matrix a = new Matrix(new double[][]{{2,3,1}, {2,-7,4}});
+        Matrix b = new Matrix(new double[][]{{3,4,5}, {1,1,4}, {2,1,4}});
+        System.out.println(a.dot(b).toString());
+
+        System.out.println(a.frobenius());
+        System.out.println(a.sub(a).frobenius());
+        System.out.println(a.div(a).frobenius());
     }
 
 

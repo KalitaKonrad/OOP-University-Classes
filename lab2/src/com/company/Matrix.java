@@ -253,4 +253,14 @@ public class Matrix {
 
         return newMatrix;
     }
+
+    //2.10
+    public double frobenius() {
+        double frobeniusNorm = 0;
+        double[] matrixData = getData();
+        for (int i = 0; i < matrixData.length; i++) {
+            frobeniusNorm += Math.pow(matrixData[i], 2);
+        }
+        return frobeniusNorm;
+    }
 }
