@@ -110,10 +110,13 @@ public class Matrix {
     }
 
     //2.5
-    public void reshape(int newRows, int newCols) {
+    public void reshape(int newRows, int newCols) throws RuntimeException {
         if (rows * cols != newRows * newCols) {
             throw new RuntimeException(String.format("%d x %d matrix can't be reshaped to %d x %d", rows, cols, newRows, newCols));
         }
+
+        rows = newRows;
+        cols = newCols;
     }
 
     //2.6
@@ -187,17 +190,13 @@ public class Matrix {
     }
 
     private Matrix getMatrix(Matrix m, String action) throws IllegalArgumentException {
-        try {
-            if (this.rows != m.getRows() || this.cols != m.getCols())  {
-                throw new Exception();
-            }
+        if (this.rows != m.getRows() || this.cols != m.getCols())  {
+            throw new IllegalArgumentException("Wrong dimensions of matrix!");
         }
-        catch(Exception e) {
-            e.printStackTrace();
-        }
-        Matrix newMatrix = new Matrix(rows, cols);
 
+        Matrix newMatrix = new Matrix(rows, cols);
         int matrixLength = rows * cols;
+
         double[] newMatrixData = newMatrix.getData();
         double[] thisMatrixData = this.getData();
         double[] mMatrixData = m.getData();
@@ -228,13 +227,10 @@ public class Matrix {
 
     // 2.9
     public Matrix dot(Matrix m) throws IllegalArgumentException {
-        try {
-            if (this.cols != m.getRows()) {
-                throw new IllegalArgumentException("Wrong Matrix Dimensions!");
-            }
-        } catch (IllegalArgumentException e) {
-            e.printStackTrace();
+        if (this.cols != m.getRows()) {
+            throw new IllegalArgumentException("Wrong Matrix Dimensions!");
         }
+
         int newMatrixRowsNumber = rows, newMatrixColsNumber = m.getCols();
         Matrix newMatrix = new Matrix(newMatrixRowsNumber, newMatrixColsNumber);
 
