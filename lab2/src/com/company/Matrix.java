@@ -53,12 +53,12 @@ public class Matrix {
 
         int currentRow = 0;
         for (int i = 0; i < data.length; i++) {
-            if (i % rows == 0 && i != 0) {
+            if (i % cols == 0 && i != 0) {
                 currentRow++;
-                result[currentRow][i % rows] = data[i];
+                result[currentRow][i % cols] = data[i];
             }
             else {
-                result[currentRow][i % rows] = data[i];
+                result[currentRow][i % cols] = data[i];
             }
         }
 
@@ -66,16 +66,22 @@ public class Matrix {
     }
 
     //2.3
-    public double getValue(int r, int c) {
+    public double getValue(int r, int c) throws ArrayIndexOutOfBoundsException {
+        if (r > rows || r < 1 || c > cols || c < 1) {
+            throw new ArrayIndexOutOfBoundsException("Wrong row or/and column request provided!");
+        }
         r--;
         c--;
-        return data[r * rows + c];
+        return data[r * cols + c];
     }
 
-    public void setValue(int r, int c, double value) {
+    public void setValue(int r, int c, double value) throws IndexOutOfBoundsException {
+        if (r > rows || r < 1 || c > cols || c < 1) {
+            throw new ArrayIndexOutOfBoundsException("Wrong row or/and column request provided!");
+        }
         r--;
         c--;
-        data[r * rows + c] = value;
+        data[r * cols + c] = value;
     }
 
     public void setData(double[] data) {
@@ -87,11 +93,11 @@ public class Matrix {
         StringBuilder buffer = new StringBuilder();
         buffer.append("[");
         for (int i = 0; i < data.length; i++) {
-            if (i % rows == 0 && i != 0) {
+            if (i % cols == 0 && i != 0) {
                 buffer.append("], ");
                 buffer.append("[" + data[i] + ", ");
             }
-            else if ( (i + 1) % rows == 0) {
+            else if ( (i + 1) % cols == 0) {
                 buffer.append(data[i]); // no colon since it is the last element in a row
             }
             else {
@@ -151,7 +157,7 @@ public class Matrix {
         return getMatrix(w, "div");
     }
 
-    private Matrix getMatrix(double w, String action) {
+    private Matrix getMatrix(double w, String action) throws IllegalArgumentException {
         int matrixLength = cols * rows;
         Matrix newMatrix = new Matrix(rows, cols);
         double[] currentMatrixData = getData();
@@ -168,6 +174,9 @@ public class Matrix {
                     currentMatrixData[i] *= w;
                     break;
                 case "div":
+                    if (w == 0.0) {
+                        throw new IllegalArgumentException("Division by ZERO!");
+                    }
                     currentMatrixData[i] /= w;
                     break;
              }
@@ -177,7 +186,7 @@ public class Matrix {
         return newMatrix;
     }
 
-    private Matrix getMatrix(Matrix m, String action) {
+    private Matrix getMatrix(Matrix m, String action) throws IllegalArgumentException {
         try {
             if (this.rows != m.getRows() || this.cols != m.getCols())  {
                 throw new Exception();
@@ -205,6 +214,9 @@ public class Matrix {
                     newMatrixData[i] = thisMatrixData[i] * mMatrixData[i];
                     break;
                 case "div":
+                    if (mMatrixData[i] == 0) {
+                        throw new IllegalArgumentException("Division by ZERO!");
+                    }
                     newMatrixData[i] = thisMatrixData[i] / mMatrixData[i];
                     break;
             }
@@ -213,18 +225,32 @@ public class Matrix {
         newMatrix.setData(newMatrixData);
         return newMatrix;
     }
-/*
+
     // 2.9
-    Matrix dot(Matrix m) {
+    public Matrix dot(Matrix m) throws IllegalArgumentException {
         try {
             if (this.cols != m.getRows()) {
-                throw new Exception();
+                throw new IllegalArgumentException("Wrong Matrix Dimensions!");
             }
-        }
-        catch (Exception e) {
+        } catch (IllegalArgumentException e) {
             e.printStackTrace();
         }
+        int newMatrixRowsNumber = rows, newMatrixColsNumber = m.getCols();
+        Matrix newMatrix = new Matrix(newMatrixRowsNumber, newMatrixColsNumber);
 
+        System.out.println(newMatrixRowsNumber);
+        System.out.println(newMatrixColsNumber);
+        double currentElement = 0;
+        for (int thisMatrixRow = 0; thisMatrixRow < this.rows; thisMatrixRow++) {
+            for (int mMatrixColumn = 0; mMatrixColumn < m.getCols(); mMatrixColumn++) {
+                for (int j = 0; j < m.getCols(); j++) { // row * column multiplication (to produce single element)
+                    currentElement += this.getValue(thisMatrixRow + 1, j + 1) * m.getValue(j + 1, mMatrixColumn + 1);
+                }
+                newMatrix.setValue(thisMatrixRow + 1, mMatrixColumn + 1, currentElement);
+                currentElement = 0;
+            }
+        }
 
-    }*/
+        return newMatrix;
+    }
 }
