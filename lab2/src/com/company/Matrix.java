@@ -234,8 +234,6 @@ public class Matrix {
         int newMatrixRowsNumber = rows, newMatrixColsNumber = m.getCols();
         Matrix newMatrix = new Matrix(newMatrixRowsNumber, newMatrixColsNumber);
 
-        System.out.println(newMatrixRowsNumber);
-        System.out.println(newMatrixColsNumber);
         double currentElement = 0;
         for (int thisMatrixRow = 0; thisMatrixRow < this.rows; thisMatrixRow++) {
             for (int mMatrixColumn = 0; mMatrixColumn < m.getCols(); mMatrixColumn++) {
