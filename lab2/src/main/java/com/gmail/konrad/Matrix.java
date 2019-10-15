@@ -1,4 +1,4 @@
-package com.company;
+package com.gmail.konrad;
 
 public class Matrix {
     private double[] data;
