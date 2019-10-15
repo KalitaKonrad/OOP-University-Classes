@@ -112,7 +112,7 @@ public class Matrix {
     //2.5
     public void reshape(int newRows, int newCols) throws RuntimeException {
         if (rows * cols != newRows * newCols) {
-            throw new RuntimeException(String.format("%d x %d matrix can't be reshaped to %d x %d", rows, cols, newRows, newCols));
+            throw new RuntimeException(String.format("Wrong provided dimensions!"));
         }
 
         rows = newRows;

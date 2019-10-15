@@ -72,20 +72,41 @@ class MatrixTest {
     }
 
     @Test
-    void reshape() {
-
+    void reshapeShouldThrowRuntimeException() {
+       try {
+           matrix.reshape(5, 5);
+       }
+       catch (RuntimeException e) {
+           assertEquals("Wrong provided dimensions!", e.getMessage());
+       }
     }
 
     @Test
     void shape() {
+        int[] expected = {3, 3};
+        assertArrayEquals(expected, matrix.shape());
     }
 
     @Test
-    void add() {
+    void addMatrixToMatrix() {
+        Matrix expected = new Matrix(new double[][] {{2, 4, 6}, {8, 10, 12}, {14, 16, 18}});
+        matrix = matrix.add(matrix);
+
+        double[] expectedData = expected.getData();
+        double[] matrixData = matrix.getData();
+
+        assertArrayEquals(expectedData, matrixData);
     }
 
     @Test
-    void add1() {
+    void addTypeDoubleToEachMatrixElement() {
+        Matrix expected = new Matrix(new double[][] {{6, 7, 8}, {9, 10, 11}, {12, 13, 14}});
+        matrix.add(5);
+
+        double[] expectedData = expected.getData();
+        double[] matrixData = matrix.getData();
+
+        assertArrayEquals(expectedData, matrixData);
     }
 
     @Test
