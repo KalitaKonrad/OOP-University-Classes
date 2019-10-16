@@ -1,6 +1,6 @@
-package com.gmail.konradkalita;
+package com.gmail.konradkalita.lab2_and_3;
 
-import org.junit.jupiter.api.AfterEach;
+import com.gmail.konradkalita.lab2_and_3.Matrix;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

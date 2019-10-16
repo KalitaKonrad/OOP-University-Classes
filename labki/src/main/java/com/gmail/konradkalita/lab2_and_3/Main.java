@@ -1,4 +1,4 @@
-package com.gmail.konradkalita;
+package com.gmail.konradkalita.lab2_and_3;
 
 public class Main
 {

@@ -1,4 +1,4 @@
-package com.gmail.konradkalita;
+package com.gmail.konradkalita.lab2_and_3;
 
 public class Matrix
 {
@@ -6,7 +6,7 @@ public class Matrix
     private int rows;
     private int cols;
 
-    Matrix(int rows, int cols)
+    public Matrix(int rows, int cols)
     {
         this.rows = rows;
         this.cols = cols;
@@ -30,7 +30,7 @@ public class Matrix
 
 
     // 2.1
-    Matrix(double[][] d)
+    public Matrix(double[][] d)
     {
         int longestRow = 0;
         for (double[] row : d)
