@@ -1,32 +1,40 @@
 package com.gmail.konradkalita;
 
-public class Matrix {
+public class Matrix
+{
     private double[] data;
     private int rows;
     private int cols;
 
-    Matrix(int rows, int cols) {
+    Matrix(int rows, int cols)
+    {
         this.rows = rows;
         this.cols = cols;
         data = new double[rows * cols];
     }
-    public int getRows() {
+
+    public int getRows()
+    {
         return rows;
     }
 
-    public int getCols() {
+    public int getCols()
+    {
         return cols;
     }
 
-    public double[] getData() {
+    public double[] getData()
+    {
         return data;
     }
 
 
     // 2.1
-    Matrix(double[][] d) {
+    Matrix(double[][] d)
+    {
         int longestRow = 0;
-        for (double[] row : d) {
+        for (double[] row : d)
+        {
             longestRow = Math.max(longestRow, row.length);
         }
         this.cols = longestRow;
@@ -34,12 +42,15 @@ public class Matrix {
         data = new double[rows * cols];
 
         int currentElementPlace = 0;
-        for (double[] row : d) {
-            for (int i = 0; i < longestRow; i++) {
-                if (i < row.length) {
+        for (double[] row : d)
+        {
+            for (int i = 0; i < longestRow; i++)
+            {
+                if (i < row.length)
+                {
                     data[currentElementPlace] = row[i];
-                }
-                else {
+                } else
+                {
                     data[currentElementPlace] = 0.0;
                 }
                 currentElementPlace++;
@@ -48,16 +59,19 @@ public class Matrix {
     }
 
     // 2.2
-    public double[][] asArray() {
+    public double[][] asArray()
+    {
         double[][] result = new double[rows][cols];
 
         int currentRow = 0;
-        for (int i = 0; i < data.length; i++) {
-            if (i % cols == 0 && i != 0) {
+        for (int i = 0; i < data.length; i++)
+        {
+            if (i % cols == 0 && i != 0)
+            {
                 currentRow++;
                 result[currentRow][i % cols] = data[i];
-            }
-            else {
+            } else
+            {
                 result[currentRow][i % cols] = data[i];
             }
         }
@@ -66,8 +80,10 @@ public class Matrix {
     }
 
     //2.3
-    public double getValue(int r, int c) throws ArrayIndexOutOfBoundsException {
-        if (r > rows || r < 1 || c > cols || c < 1) {
+    public double getValue(int r, int c) throws ArrayIndexOutOfBoundsException
+    {
+        if (r > rows || r < 1 || c > cols || c < 1)
+        {
             throw new ArrayIndexOutOfBoundsException("Wrong row or/and column request provided!");
         }
         r--;
@@ -75,8 +91,10 @@ public class Matrix {
         return data[r * cols + c];
     }
 
-    public void setValue(int r, int c, double value) throws IndexOutOfBoundsException {
-        if (r > rows || r < 1 || c > cols || c < 1) {
+    public void setValue(int r, int c, double value) throws IndexOutOfBoundsException
+    {
+        if (r > rows || r < 1 || c > cols || c < 1)
+        {
             throw new ArrayIndexOutOfBoundsException("Wrong row or/and column request provided!");
         }
         r--;
@@ -84,23 +102,28 @@ public class Matrix {
         data[r * cols + c] = value;
     }
 
-    public void setData(double[] data) {
+    public void setData(double[] data)
+    {
         this.data = data;
     }
+
     //2.4
     @Override
-    public String toString() {
+    public String toString()
+    {
         StringBuilder buffer = new StringBuilder();
         buffer.append("[");
-        for (int i = 0; i < data.length; i++) {
-            if (i % cols == 0 && i != 0) {
+        for (int i = 0; i < data.length; i++)
+        {
+            if (i % cols == 0 && i != 0)
+            {
                 buffer.append("], ");
                 buffer.append("[" + data[i] + ", ");
-            }
-            else if ( (i + 1) % cols == 0) {
+            } else if ((i + 1) % cols == 0)
+            {
                 buffer.append(data[i]); // no colon since it is the last element in a row
-            }
-            else {
+            } else
+            {
                 buffer.append(data[i] + ", ");
             }
         }
@@ -110,8 +133,10 @@ public class Matrix {
     }
 
     //2.5
-    public void reshape(int newRows, int newCols) throws RuntimeException {
-        if (rows * cols != newRows * newCols) {
+    public void reshape(int newRows, int newCols) throws RuntimeException
+    {
+        if (rows * cols != newRows * newCols)
+        {
             throw new RuntimeException(String.format("Wrong provided dimensions!"));
         }
 
@@ -120,7 +145,8 @@ public class Matrix {
     }
 
     //2.6
-    public int[] shape() {
+    public int[] shape()
+    {
         int[] result = new int[2];
         result[0] = rows;
         result[1] = cols;
@@ -128,45 +154,56 @@ public class Matrix {
     }
 
     //2.7 && 2.8
-    public Matrix add(Matrix m) {
+    public Matrix add(Matrix m)
+    {
         return getMatrix(m, "add");
     }
 
-    public Matrix add(double w) {
+    public Matrix add(double w)
+    {
         return getMatrix(w, "add");
     }
 
-    public Matrix sub(Matrix m) {
+    public Matrix sub(Matrix m)
+    {
         return getMatrix(m, "sub");
     }
 
-    public Matrix sub(double w) {
+    public Matrix sub(double w)
+    {
         return getMatrix(w, "sub");
     }
 
-    public Matrix mul(Matrix m) {
+    public Matrix mul(Matrix m)
+    {
         return getMatrix(m, "mul");
     }
 
-    public Matrix mul(double w) {
+    public Matrix mul(double w)
+    {
         return getMatrix(w, "mul");
     }
 
-    public Matrix div(Matrix m) {
+    public Matrix div(Matrix m)
+    {
         return getMatrix(m, "div");
     }
 
-    public Matrix div(double w) {
+    public Matrix div(double w)
+    {
         return getMatrix(w, "div");
     }
 
-    private Matrix getMatrix(double w, String action) throws IllegalArgumentException {
+    private Matrix getMatrix(double w, String action) throws IllegalArgumentException
+    {
         int matrixLength = cols * rows;
         Matrix newMatrix = new Matrix(rows, cols);
         double[] currentMatrixData = getData();
 
-        for (int i = 0; i < matrixLength; i++) {
-            switch (action) {
+        for (int i = 0; i < matrixLength; i++)
+        {
+            switch (action)
+            {
                 case "add":
                     currentMatrixData[i] += w;
                     break;
@@ -177,20 +214,23 @@ public class Matrix {
                     currentMatrixData[i] *= w;
                     break;
                 case "div":
-                    if (w == 0.0) {
+                    if (w == 0.0)
+                    {
                         throw new IllegalArgumentException("Division by ZERO!");
                     }
                     currentMatrixData[i] /= w;
                     break;
-             }
+            }
         }
 
         newMatrix.setData(currentMatrixData);
         return newMatrix;
     }
 
-    private Matrix getMatrix(Matrix m, String action) throws IllegalArgumentException {
-        if (this.rows != m.getRows() || this.cols != m.getCols())  {
+    private Matrix getMatrix(Matrix m, String action) throws IllegalArgumentException
+    {
+        if (this.rows != m.getRows() || this.cols != m.getCols())
+        {
             throw new IllegalArgumentException("Wrong dimensions of matrix!");
         }
 
@@ -201,8 +241,10 @@ public class Matrix {
         double[] thisMatrixData = this.getData();
         double[] mMatrixData = m.getData();
 
-        for (int i = 0; i < matrixLength; i++) {
-            switch (action) {
+        for (int i = 0; i < matrixLength; i++)
+        {
+            switch (action)
+            {
                 case "add":
                     newMatrixData[i] = thisMatrixData[i] + mMatrixData[i];
                     break;
@@ -213,7 +255,8 @@ public class Matrix {
                     newMatrixData[i] = thisMatrixData[i] * mMatrixData[i];
                     break;
                 case "div":
-                    if (mMatrixData[i] == 0) {
+                    if (mMatrixData[i] == 0)
+                    {
                         throw new IllegalArgumentException("Division by ZERO!");
                     }
                     newMatrixData[i] = thisMatrixData[i] / mMatrixData[i];
@@ -226,8 +269,10 @@ public class Matrix {
     }
 
     // 2.9
-    public Matrix dot(Matrix m) throws IllegalArgumentException {
-        if (this.cols != m.getRows()) {
+    public Matrix dot(Matrix m) throws IllegalArgumentException
+    {
+        if (this.cols != m.getRows())
+        {
             throw new IllegalArgumentException("Wrong Matrix Dimensions!");
         }
 
@@ -235,9 +280,12 @@ public class Matrix {
         Matrix newMatrix = new Matrix(newMatrixRowsNumber, newMatrixColsNumber);
 
         double currentElement = 0;
-        for (int thisMatrixRow = 0; thisMatrixRow < this.rows; thisMatrixRow++) {
-            for (int mMatrixColumn = 0; mMatrixColumn < m.getCols(); mMatrixColumn++) {
-                for (int j = 0; j < m.getCols(); j++) { // row * column multiplication (to produce single element)
+        for (int thisMatrixRow = 0; thisMatrixRow < this.rows; thisMatrixRow++)
+        {
+            for (int mMatrixColumn = 0; mMatrixColumn < m.getCols(); mMatrixColumn++)
+            {
+                for (int j = 0; j < m.getCols(); j++)
+                { // row * column multiplication (to produce single element)
                     currentElement += this.getValue(thisMatrixRow + 1, j + 1) * m.getValue(j + 1, mMatrixColumn + 1);
                 }
                 newMatrix.setValue(thisMatrixRow + 1, mMatrixColumn + 1, currentElement);
@@ -249,10 +297,12 @@ public class Matrix {
     }
 
     //2.10
-    public double frobenius() {
+    public double frobenius()
+    {
         double frobeniusNorm = 0;
         double[] matrixData = getData();
-        for (int i = 0; i < matrixData.length; i++) {
+        for (int i = 0; i < matrixData.length; i++)
+        {
             frobeniusNorm += Math.pow(matrixData[i], 2);
         }
         return frobeniusNorm;

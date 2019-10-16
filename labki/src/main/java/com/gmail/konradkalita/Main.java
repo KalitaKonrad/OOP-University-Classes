@@ -1,15 +1,17 @@
 package com.gmail.konradkalita;
 
-public class Main {
+public class Main
+{
 
-    public static void main(String[] args) {
+    public static void main(String[] args)
+    {
         // Creating Matrix m
         // 1 2 3 4
         // 5 6 0 0
         // 7 8 0 0
-        Matrix m = new Matrix(new double[][]{ {1, 2, 3, 4}, {5, 6}, {7, 8} });
-        Matrix a = new Matrix(new double[][]{ {2, 3, 1}, {2, -7, 4}} );
-        Matrix b = new Matrix(new double[][]{{3, 4, 5}, {1, 1, 4}, {2, 1, 4} });
+        Matrix m = new Matrix(new double[][]{{1, 2, 3, 4}, {5, 6}, {7, 8}});
+        Matrix a = new Matrix(new double[][]{{2, 3, 1}, {2, -7, 4}});
+        Matrix b = new Matrix(new double[][]{{3, 4, 5}, {1, 1, 4}, {2, 1, 4}});
 
         // Matrices elemenet by element addition check
         System.out.println(m.add(m).toString());
@@ -18,9 +20,9 @@ public class Main {
         print2dArray(m.asArray());
 
         // get/set value check
-        System.out.println(m.getValue(3,1));
-        m.setValue(3,1,10.0);
-        System.out.println(m.getValue(3,1));
+        System.out.println(m.getValue(3, 1));
+        m.setValue(3, 1, 10.0);
+        System.out.println(m.getValue(3, 1));
 
         // matrix convert to string check
         System.out.println(m.toString());
@@ -40,9 +42,12 @@ public class Main {
     }
 
 
-    private static void print2dArray(double[][] array) {
-        for (double[] row : array) {
-            for (double element : row) {
+    private static void print2dArray(double[][] array)
+    {
+        for (double[] row : array)
+        {
+            for (double element : row)
+            {
                 System.out.print(element + " ");
             }
             System.out.println();
