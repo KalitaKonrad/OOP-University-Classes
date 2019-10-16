@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report.xsd" name="com.gmail.konradkalita.MatrixTest" time="0.035" tests="17" errors="0" skipped="0" failures="0">
+<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report.xsd" name="com.gmail.konradkalita.MatrixTest" time="0.033" tests="19" errors="0" skipped="0" failures="0">
   <properties>
     <property name="awt.toolkit" value="sun.lwawt.macosx.LWCToolkit"/>
     <property name="java.specification.version" value="12"/>
@@ -13,7 +13,7 @@
     <property name="sun.java.launcher" value="SUN_STANDARD"/>
     <property name="user.country" value="GB"/>
     <property name="sun.boot.library.path" value="/Library/Java/JavaVirtualMachines/jdk-12.0.1.jdk/Contents/Home/lib"/>
-    <property name="sun.java.command" value="/Users/konradkalita/Desktop/OOP-University-Classes/labki/target/surefire/surefirebooter4094398105517290901.jar /Users/konradkalita/Desktop/OOP-University-Classes/labki/target/surefire 2019-10-15T23-35-10_407-jvmRun1 surefire304246970823145100tmp surefire_010938778735704540899tmp"/>
+    <property name="sun.java.command" value="/Users/konradkalita/Desktop/OOP-University-Classes/labki/target/surefire/surefirebooter16139119924868355926.jar /Users/konradkalita/Desktop/OOP-University-Classes/labki/target/surefire 2019-10-16T18-33-25_217-jvmRun1 surefire11445227838608670200tmp surefire_04614385629772196472tmp"/>
     <property name="http.nonProxyHosts" value="local|*.local|169.254/16|*.169.254/16"/>
     <property name="jdk.debug" value="release"/>
     <property name="surefire.test.class.path" value="/Users/konradkalita/Desktop/OOP-University-Classes/labki/target/test-classes:/Users/konradkalita/Desktop/OOP-University-Classes/labki/target/classes:/Users/konradkalita/.m2/repository/org/junit/jupiter/junit-jupiter-api/5.4.2/junit-jupiter-api-5.4.2.jar:/Users/konradkalita/.m2/repository/org/apiguardian/apiguardian-api/1.0.0/apiguardian-api-1.0.0.jar:/Users/konradkalita/.m2/repository/org/opentest4j/opentest4j/1.1.1/opentest4j-1.1.1.jar:/Users/konradkalita/.m2/repository/org/junit/platform/junit-platform-commons/1.4.2/junit-platform-commons-1.4.2.jar:/Users/konradkalita/.m2/repository/org/junit/jupiter/junit-jupiter-engine/5.4.2/junit-jupiter-engine-5.4.2.jar:/Users/konradkalita/.m2/repository/org/junit/platform/junit-platform-engine/1.4.2/junit-platform-engine-1.4.2.jar:"/>
@@ -30,7 +30,7 @@
     <property name="java.vm.specification.vendor" value="Oracle Corporation"/>
     <property name="java.specification.name" value="Java Platform API Specification"/>
     <property name="java.awt.graphicsenv" value="sun.awt.CGraphicsEnvironment"/>
-    <property name="surefire.real.class.path" value="/Users/konradkalita/Desktop/OOP-University-Classes/labki/target/surefire/surefirebooter4094398105517290901.jar"/>
+    <property name="surefire.real.class.path" value="/Users/konradkalita/Desktop/OOP-University-Classes/labki/target/surefire/surefirebooter16139119924868355926.jar"/>
     <property name="sun.management.compiler" value="HotSpot 64-Bit Tiered Compilers"/>
     <property name="ftp.nonProxyHosts" value="local|*.local|169.254/16|*.169.254/16"/>
     <property name="java.runtime.version" value="12.0.1+12"/>
@@ -56,21 +56,23 @@
     <property name="socksNonProxyHosts" value="local|*.local|169.254/16|*.169.254/16"/>
     <property name="java.class.version" value="56.0"/>
   </properties>
-  <testcase name="asArray" classname="com.gmail.konradkalita.MatrixTest" time="0.012"/>
-  <testcase name="frobenius" classname="com.gmail.konradkalita.MatrixTest" time="0"/>
-  <testcase name="add" classname="com.gmail.konradkalita.MatrixTest" time="0"/>
-  <testcase name="div" classname="com.gmail.konradkalita.MatrixTest" time="0"/>
-  <testcase name="dot" classname="com.gmail.konradkalita.MatrixTest" time="0"/>
-  <testcase name="mul" classname="com.gmail.konradkalita.MatrixTest" time="0"/>
-  <testcase name="sub" classname="com.gmail.konradkalita.MatrixTest" time="0"/>
-  <testcase name="add1" classname="com.gmail.konradkalita.MatrixTest" time="0.001"/>
-  <testcase name="div1" classname="com.gmail.konradkalita.MatrixTest" time="0"/>
-  <testcase name="mul1" classname="com.gmail.konradkalita.MatrixTest" time="0.001"/>
-  <testcase name="sub1" classname="com.gmail.konradkalita.MatrixTest" time="0"/>
+  <testcase name="subTypeDoubleToEachMatrixElement" classname="com.gmail.konradkalita.MatrixTest" time="0.009"/>
+  <testcase name="Matrix" classname="com.gmail.konradkalita.MatrixTest" time="0"/>
+  <testcase name="addTypeDoubleToEachMatrixElement" classname="com.gmail.konradkalita.MatrixTest" time="0.001"/>
+  <testcase name="testToString" classname="com.gmail.konradkalita.MatrixTest" time="0.001"/>
+  <testcase name="asArray" classname="com.gmail.konradkalita.MatrixTest" time="0.001"/>
+  <testcase name="dotMatrixByMatrixMultiplication" classname="com.gmail.konradkalita.MatrixTest" time="0"/>
   <testcase name="shape" classname="com.gmail.konradkalita.MatrixTest" time="0"/>
-  <testcase name="toString1" classname="com.gmail.konradkalita.MatrixTest" time="0"/>
-  <testcase name="reshape" classname="com.gmail.konradkalita.MatrixTest" time="0"/>
+  <testcase name="divEachMatrixElementByTypeDouble" classname="com.gmail.konradkalita.MatrixTest" time="0"/>
+  <testcase name="addMatrixToMatrix" classname="com.gmail.konradkalita.MatrixTest" time="0"/>
+  <testcase name="divisionByZeroDoubleInMatrixShouldThrowIllegalArgumentException" classname="com.gmail.konradkalita.MatrixTest" time="0.001"/>
+  <testcase name="frobeniusEveryElementIsSquaredAndAdded" classname="com.gmail.konradkalita.MatrixTest" time="0"/>
+  <testcase name="reshapeShouldThrowRuntimeException" classname="com.gmail.konradkalita.MatrixTest" time="0.001"/>
+  <testcase name="mulEachMatrixElementByCorrespondingMatrixElement" classname="com.gmail.konradkalita.MatrixTest" time="0"/>
   <testcase name="setValue" classname="com.gmail.konradkalita.MatrixTest" time="0"/>
-  <testcase name="getValue" classname="com.gmail.konradkalita.MatrixTest" time="0.002"/>
+  <testcase name="mulTypeDoubleToEachMatrixElement" classname="com.gmail.konradkalita.MatrixTest" time="0"/>
+  <testcase name="divisionByZeroElementInMatrixShouldThrowIllegalArgumentException" classname="com.gmail.konradkalita.MatrixTest" time="0"/>
+  <testcase name="subMatrixFromMatrix" classname="com.gmail.konradkalita.MatrixTest" time="0"/>
+  <testcase name="getValue" classname="com.gmail.konradkalita.MatrixTest" time="0"/>
   <testcase name="setData" classname="com.gmail.konradkalita.MatrixTest" time="0.001"/>
 </testsuite>

@@ -193,14 +193,14 @@ class MatrixTest
     }
 
     @Test
-    void frobeniusEveryElementIsSquaredAndAdded() // should I even write this test? It's the same as the function itself.
+    void frobeniusMatrixSubstractedFromMatrixShouldHaveZeroFrobeniusNorm()
     {
-        double expectedValue = 0;
-        double[] matrixData = matrix.getData();
-        for (int i = 0; i < matrixData.length; i++)
-        {
-            expectedValue += Math.pow(matrixData[i], 2);
-        }
-        assertEquals(expectedValue, matrix.frobenius());
+        assertEquals(0, matrix.sub(matrix).frobenius());
+    }
+
+    @Test
+    void frobeniusMatrixDividedByMatrixShouldHaveRowsMultipliedByColsFrobeniusNorm()
+    {
+        assertEquals(3*3, matrix.div(matrix).frobenius());
     }
 }
