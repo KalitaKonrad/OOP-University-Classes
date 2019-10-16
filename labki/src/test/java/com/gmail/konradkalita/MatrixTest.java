@@ -22,11 +22,6 @@ class MatrixTest
         matrix = new Matrix(data);
     }
 
-    @AfterEach
-    void tearDown()
-    {
-    }
-
     @Test
     void asArray()
     {
@@ -107,9 +102,8 @@ class MatrixTest
         matrix = matrix.add(matrix);
 
         double[] expectedData = expected.getData();
-        double[] matrixData = matrix.getData();
 
-        assertArrayEquals(expectedData, matrixData);
+        assertArrayEquals(expectedData, matrix.getData());
     }
 
     @Test
@@ -117,50 +111,96 @@ class MatrixTest
     {
         Matrix expected = new Matrix(new double[][]{{6, 7, 8}, {9, 10, 11}, {12, 13, 14}});
         matrix.add(5);
-
         double[] expectedData = expected.getData();
+        assertArrayEquals(expectedData, matrix.getData());
+    }
+
+    @Test
+    void subTypeDoubleToEachMatrixElement()
+    {
+        matrix.sub(5);
+        double[] expectedData = new double[] {-4, -3, -2, -1, 0, 1, 2, 3, 4};
+        assertArrayEquals(expectedData, matrix.getData());
+    }
+
+    @Test
+    void subMatrixFromMatrix()
+    {
+        matrix = matrix.sub(matrix);
+        double[] expectedData = new double[] {0, 0, 0, 0, 0, 0, 0, 0, 0};
+        assertArrayEquals(expectedData, matrix.getData());
+    }
+
+    @Test
+    void mulTypeDoubleToEachMatrixElement()
+    {
+        matrix.mul(2);
+        double[] expectedData = new double[] {2, 4, 6, 8, 10, 12, 14, 16, 18};
+        assertArrayEquals(expectedData, matrix.getData());
+    }
+
+    @Test
+    void mulEachMatrixElementByCorrespondingMatrixElement()
+    {
+        double[] expectedData = new double[] {1, 4, 9, 16, 25, 36, 49, 64, 81};
+        matrix = matrix.mul(matrix);
+        assertArrayEquals(expectedData, matrix.getData());
+    }
+
+    @Test
+    void divEachMatrixElementByTypeDouble()
+    {
+        double[] expected = matrix.getData();
+        for (int i = 0; i < expected.length; i++)
+        {
+            expected[i] /= 2;
+        }
+        matrix.div(2);
+        assertArrayEquals(matrix.getData(), expected);
+    }
+
+    @Test
+    void divisionByZeroDoubleInMatrixShouldThrowIllegalArgumentException()
+    {
+        try
+        {
+            matrix.div(0);
+        } catch (IllegalArgumentException e)
+        {
+            assertEquals("Division by ZERO!", e.getMessage());
+        }
+
+
+    }
+    @Test
+    void divisionByZeroElementInMatrixShouldThrowIllegalArgumentException()
+    {
+        Matrix test = new Matrix(new double[][] {{1, 1, 1}, {0, 0, 0}, {1, 1, 1}});
+        try {
+            test.div(test);
+        } catch (IllegalArgumentException e)
+        {
+            assertEquals("Division by ZERO!", e.getMessage());
+        }
+    }
+
+    @Test
+    void dotMatrixByMatrixMultiplication()
+    {
+        double[] expected = new double[] {30, 36, 42, 66, 81, 96, 102, 126, 150};
+        matrix = matrix.dot(matrix);
+        assertArrayEquals(expected, matrix.getData());
+    }
+
+    @Test
+    void frobeniusEveryElementIsSquaredAndAdded() // should I even write this test? It's the same as the function itself.
+    {
+        double expectedValue = 0;
         double[] matrixData = matrix.getData();
-
-        assertArrayEquals(expectedData, matrixData);
-    }
-
-    @Test
-    void sub()
-    {
-    }
-
-    @Test
-    void sub1()
-    {
-    }
-
-    @Test
-    void mul()
-    {
-    }
-
-    @Test
-    void mul1()
-    {
-    }
-
-    @Test
-    void div()
-    {
-    }
-
-    @Test
-    void div1()
-    {
-    }
-
-    @Test
-    void dot()
-    {
-    }
-
-    @Test
-    void frobenius()
-    {
+        for (int i = 0; i < matrixData.length; i++)
+        {
+            expectedValue += Math.pow(matrixData[i], 2);
+        }
+        assertEquals(expectedValue, matrix.frobenius());
     }
 }
