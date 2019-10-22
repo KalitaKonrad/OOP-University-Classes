@@ -148,7 +148,7 @@ class MatrixTest
     }
 
     @Test
-    void divEachMatrixElementByTypeDouble()
+    void div_divisionEachMatrixElementByTypeDouble()
     {
         double[] expected = matrix.getData();
         for (int i = 0; i < expected.length; i++)
@@ -160,7 +160,7 @@ class MatrixTest
     }
 
     @Test
-    void divisionByZeroDoubleInMatrixShouldThrowIllegalArgumentException()
+    void Should__ThrowIllegalArgumentException_ByZeroDoubleInMatrix()
     {
         try
         {
