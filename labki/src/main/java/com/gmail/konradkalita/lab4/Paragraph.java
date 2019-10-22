@@ -4,7 +4,7 @@ import java.io.PrintStream;
 
 public class Paragraph implements HTMLElement
 {
-    private String content;
+    protected String content;
 
     public Paragraph(String content)
     {

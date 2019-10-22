@@ -7,6 +7,11 @@ public class UnorderedList implements HTMLElement
 {
     private ArrayList<ListItem> list;
 
+    public UnorderedList()
+    {
+        this.list = new ArrayList<>();
+    }
+
     public UnorderedList(ArrayList<ListItem> list)
     {
         this.list = list;
@@ -15,6 +20,8 @@ public class UnorderedList implements HTMLElement
     @Override
     public void writeHTML(PrintStream out)
     {
+        out.print("<ul>");
         list.forEach(item -> item.writeHTML(out));
+        out.print("</ul>");
     }
 }
