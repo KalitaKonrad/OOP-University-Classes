@@ -4,5 +4,5 @@ import java.io.PrintStream;
 
 public interface HTMLElement
 {
-    PrintStream wirteHTML(PrintStream out);
+    void writeHTML(PrintStream out);
 }

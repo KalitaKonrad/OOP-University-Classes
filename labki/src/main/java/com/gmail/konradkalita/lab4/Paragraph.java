@@ -18,9 +18,8 @@ public class Paragraph implements HTMLElement
     }
 
     @Override
-    public PrintStream wirteHTML(PrintStream out)
+    public void writeHTML(PrintStream out)
     {
         out.printf("<p>%s</p>", content);
-        return out;
     }
 }

@@ -1,7 +1,6 @@
 package com.gmail.konradkalita.lab4;
 
 import java.io.PrintStream;
-import java.io.PrintWriter;
 import java.util.ArrayList;
 
 public class Section implements HTMLElement
@@ -15,7 +14,7 @@ public class Section implements HTMLElement
     }
 
     @Override
-    public PrintWriter wirteHTML(PrintStream out)
+    public void writeHTML(PrintStream out)
     {
 
     }

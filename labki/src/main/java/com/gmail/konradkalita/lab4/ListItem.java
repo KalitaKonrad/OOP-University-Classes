@@ -12,9 +12,8 @@ public class ListItem implements HTMLElement
     }
 
     @Override
-    public PrintStream wirteHTML(PrintStream out)
+    public void writeHTML(PrintStream out)
     {
         out.printf("<li>%s</li>", text);
-        return out;
     }
 }
