@@ -17,6 +17,16 @@ public class UnorderedList implements HTMLElement
         this.list = list;
     }
 
+    public void addItem(ListItem item)
+    {
+        list.add(item);
+    }
+
+    public void addItem(String content)
+    {
+        list.add(new ListItem(content));
+    }
+
     @Override
     public void writeHTML(PrintStream out)
     {

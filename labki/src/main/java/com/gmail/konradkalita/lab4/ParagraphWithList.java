@@ -1,5 +1,7 @@
 package com.gmail.konradkalita.lab4;
 
+import java.io.PrintStream;
+
 public class ParagraphWithList extends Paragraph
 {
     private UnorderedList htmlList;
@@ -12,6 +14,17 @@ public class ParagraphWithList extends Paragraph
 
     public void addItemToList(ListItem item)
     {
+        htmlList.addItem(item);
+    }
 
+    public void addItemToList(String content)
+    {
+        htmlList.addItem(new ListItem(content));
+    }
+
+    @Override
+    public void writeHTML(PrintStream out)
+    {
+        super.writeHTML(out);
     }
 }
