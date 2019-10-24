@@ -12,19 +12,35 @@ public class ParagraphWithList extends Paragraph
         this.htmlList = new UnorderedList();
     }
 
-    public void addItemToList(ListItem item)
+    public ParagraphWithList()
     {
-        htmlList.addItem(item);
+        this.htmlList = new UnorderedList();
     }
 
-    public void addItemToList(String content)
+    @Override
+    public ParagraphWithList setContent(String content)
+    {
+        this.content = content;
+        return this;
+    }
+
+    public ParagraphWithList addItemToList(ListItem item)
+    {
+        htmlList.addItem(item);
+        return this;
+    }
+
+    public ParagraphWithList addItemToList(String content)
     {
         htmlList.addItem(new ListItem(content));
+        return this;
     }
 
     @Override
     public void writeHTML(PrintStream out)
     {
-        super.writeHTML(out);
+        out.print("<p>");
+        htmlList.writeHTML(out);
+        out.print("</p>");
     }
 }

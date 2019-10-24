@@ -1,6 +1,10 @@
 com/gmail/konradkalita/lab4/Paragraph.class
+com/gmail/konradkalita/lab4/Photo.class
 com/gmail/konradkalita/lab4/HTMLElement.class
 com/gmail/konradkalita/lab4/ListItem.class
+com/gmail/konradkalita/lab4/Document.class
 com/gmail/konradkalita/lab4/UnorderedList.class
 com/gmail/konradkalita/lab2_and_3/Matrix.class
 com/gmail/konradkalita/lab4/ParagraphWithList.class
+com/gmail/konradkalita/lab4/Section.class
+com/gmail/konradkalita/lab2_and_3/Main.class

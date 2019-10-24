@@ -47,7 +47,7 @@ public class Section implements HTMLElement
     @Override
     public void writeHTML(PrintStream out)
     {
-        out.print("<div>");
+        out.printf("<div><h1>%s</h1>", title);
         paragraphList.forEach(paragraph -> paragraph.writeHTML(out));
         out.print("</div>");
     }

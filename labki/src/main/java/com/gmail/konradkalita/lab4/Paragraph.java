@@ -11,6 +11,11 @@ public class Paragraph implements HTMLElement
         this.content = content;
     }
 
+    public Paragraph()
+    {
+        this.content = "";
+    }
+
     public Paragraph setContent(String content)
     {
         this.content = content;
