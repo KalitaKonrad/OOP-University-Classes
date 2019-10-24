@@ -20,6 +20,12 @@ public class Section implements HTMLElement
         this.paragraphList = paragraphList;
     }
 
+    public Section(String title, ArrayList<Paragraph> paragraphList)
+    {
+        this.title = title;
+        this.paragraphList = paragraphList;
+    }
+
     public Section setTitle(String title)
     {
         this.title = title;
