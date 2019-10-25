@@ -1,5 +1,6 @@
 package com.gmail.konradkalita.lab4;
 
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import java.io.ByteArrayOutputStream;
@@ -8,7 +9,7 @@ import java.io.UnsupportedEncodingException;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public class PhotoTest
+class PhotoTest
 {
     @Test
     void Should_CreateValidPhoto_When_ValidImageUrlIsProvided()
@@ -34,4 +35,12 @@ public class PhotoTest
     }
 
     @Test
+    void Should_ThrowIllegalArgumentException_When_PassInNull()
+    {
+        String imageUrl = null;
+        IllegalArgumentException exception =
+                Assertions.assertThrows(IllegalArgumentException.class,
+                () -> new Photo(imageUrl));
+        assertEquals("URL is null", exception.getMessage());
+    }
 }

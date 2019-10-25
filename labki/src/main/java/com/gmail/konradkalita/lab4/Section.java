@@ -12,7 +12,7 @@ public class Section implements HTMLElement
 
     public Section(String title)
     {
-        this.title = title;
+        setTitle(title);
     }
 
     public Section(ArrayList<Paragraph> paragraphList)
@@ -26,10 +26,17 @@ public class Section implements HTMLElement
         this.paragraphList = paragraphList;
     }
 
-    public Section setTitle(String title)
+    public Section setTitle(String title) throws IllegalArgumentException
     {
-        this.title = title;
-        return this;
+        if (title == null)
+        {
+            throw new IllegalArgumentException("Title is null");
+        }
+        else
+        {
+            this.title = title;
+            return this;
+        }
     }
 
     public Section addParagraph(String paragraphText)

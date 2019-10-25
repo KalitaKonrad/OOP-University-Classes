@@ -8,7 +8,7 @@ public class Paragraph implements HTMLElement
 
     public Paragraph(String content)
     {
-        this.content = content;
+        setContent(content);
     }
 
     public Paragraph()
@@ -16,10 +16,17 @@ public class Paragraph implements HTMLElement
         this.content = "";
     }
 
-    public Paragraph setContent(String content)
+    public Paragraph setContent(String content) throws IllegalArgumentException
     {
-        this.content = content;
-        return this;
+        if (content == null)
+        {
+            throw new IllegalArgumentException("Paragraph content is null");
+        }
+        else
+        {
+            this.content = content;
+            return this;
+        }
     }
 
     @Override

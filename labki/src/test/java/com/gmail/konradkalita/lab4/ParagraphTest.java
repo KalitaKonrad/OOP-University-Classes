@@ -1,7 +1,7 @@
 package com.gmail.konradkalita.lab4;
 
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
@@ -9,16 +9,17 @@ import java.io.UnsupportedEncodingException;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class SectionTest
+class ParagraphTest
 {
+
     @Test
-    void Should_CheckIfSectionHasHtmlMarkups()
+    void Should_CheckIfParagraphHasHtmlMarkups()
     {
-        String sectionTitle = "Umiejętności";
+        String paragraphContent = "Java";
         ByteArrayOutputStream os = new ByteArrayOutputStream();
         PrintStream ps = new PrintStream(os);
 
-        new Section(sectionTitle).writeHTML(ps);
+        new Paragraph(paragraphContent).writeHTML(ps);
         String result = null;
 
         try {
@@ -27,20 +28,18 @@ class SectionTest
             e.printStackTrace();
         }
 
-        assertTrue(result.contains("<div>"));
-        assertTrue(result.contains("</div>"));
-        assertTrue(result.contains("<h1>"));
-        assertTrue(result.contains("</h1>"));
-        assertTrue(result.contains(sectionTitle));
+        assertTrue(result.contains("<p>"));
+        assertTrue(result.contains("</p>"));
+        assertTrue(result.contains(paragraphContent));
     }
 
     @Test
     void Should_ThrowIllegalArgumentException_When_PassInNull()
     {
-        String sectionTitle = null;
+        String paragraphContent = null;
         IllegalArgumentException exception =
                 Assertions.assertThrows(IllegalArgumentException.class,
-                        () -> new Section(sectionTitle));
-        assertEquals("Title is null", exception.getMessage());
+                        () -> new Paragraph(paragraphContent));
+        assertEquals("Paragraph content is null", exception.getMessage());
     }
 }
