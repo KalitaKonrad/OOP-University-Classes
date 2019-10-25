@@ -2,13 +2,11 @@ package com.gmail.konradkalita.lab2_and_3;
 
 import com.gmail.konradkalita.lab4.Document;
 import com.gmail.konradkalita.lab4.ParagraphWithList;
-import com.gmail.konradkalita.lab4.Section;
 
 public class Main
 {
     public static void main(String[] args)
     {
-        /*
         Document cv = new Document("Jan Kowalski - CV");
         cv.addPhoto("https://d-art.ppstatic.pl/kadry/k/r/1/12/44/5cebbfcd64a02_o_large.jpg");
         cv.addSection("Wykształcenie")
@@ -23,10 +21,6 @@ public class Main
                             .addItemToList("Java")
                 );
         cv.writeHTML(System.out);
-*/
-        String he = null;
-        Section sec = new Section("Paul");
-        sec.setTitle(he);
 
     }
 }
