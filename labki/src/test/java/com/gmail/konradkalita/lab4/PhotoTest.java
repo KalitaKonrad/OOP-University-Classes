@@ -23,7 +23,7 @@ class PhotoTest
 
         try {
             // decoding with ISO charset
-            result = os.toString("ISO-8859-2");
+            result = os.toString("UTF-8");
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         }

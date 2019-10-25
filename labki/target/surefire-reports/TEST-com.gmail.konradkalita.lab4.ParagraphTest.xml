@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report.xsd" name="com.gmail.konradkalita.lab2_and_3.MatrixTest" time="0.011" tests="20" errors="0" skipped="0" failures="0">
+<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report.xsd" name="com.gmail.konradkalita.lab4.ParagraphTest" time="0" tests="2" errors="0" skipped="0" failures="0">
   <properties>
     <property name="awt.toolkit" value="sun.lwawt.macosx.LWCToolkit"/>
     <property name="java.specification.version" value="12"/>
@@ -56,24 +56,6 @@
     <property name="socksNonProxyHosts" value="local|*.local|169.254/16|*.169.254/16"/>
     <property name="java.class.version" value="56.0"/>
   </properties>
-  <testcase name="Should_GetMatrixValueFromCertainGivenPosition" classname="com.gmail.konradkalita.lab2_and_3.MatrixTest" time="0"/>
-  <testcase name="Should_SetMatrixData" classname="com.gmail.konradkalita.lab2_and_3.MatrixTest" time="0"/>
-  <testcase name="Should_SetMatrixValueAtCertainGivenPosition" classname="com.gmail.konradkalita.lab2_and_3.MatrixTest" time="0"/>
-  <testcase name="Should_ReturnMatrixMultiplyByItself" classname="com.gmail.konradkalita.lab2_and_3.MatrixTest" time="0"/>
-  <testcase name="Should_ReturnMatrixConvertedToString" classname="com.gmail.konradkalita.lab2_and_3.MatrixTest" time="0"/>
-  <testcase name="Should_MultiplyEachElementInMatrixByTwo" classname="com.gmail.konradkalita.lab2_and_3.MatrixTest" time="0"/>
-  <testcase name="Should_ThrowIllegalArgumentException_When_DividedByZeroInMatrix" classname="com.gmail.konradkalita.lab2_and_3.MatrixTest" time="0"/>
-  <testcase name="Should_ReturnMatrixAsArray" classname="com.gmail.konradkalita.lab2_and_3.MatrixTest" time="0"/>
-  <testcase name="Should_HaveZeroFrobeniusNorm_When_MatrixSubtractedFromItself" classname="com.gmail.konradkalita.lab2_and_3.MatrixTest" time="0.001"/>
-  <testcase name="Should_CreateMatrixWithCertainGivenDimensions" classname="com.gmail.konradkalita.lab2_and_3.MatrixTest" time="0"/>
-  <testcase name="Should_ThrowRuntimeException_When_WrongDimensionsAreProvided" classname="com.gmail.konradkalita.lab2_and_3.MatrixTest" time="0"/>
-  <testcase name="Should_ReturnMatrixAddedToItself" classname="com.gmail.konradkalita.lab2_and_3.MatrixTest" time="0.001"/>
-  <testcase name="Should_ThrowIllegalArgumentException_When_DivisionByZeroInMatrixDivision" classname="com.gmail.konradkalita.lab2_and_3.MatrixTest" time="0.001"/>
-  <testcase name="Should_ReturnMultiplyRowsTimesColumns_When_MatrixDividedByItselfAndFrobeniusNormCounted" classname="com.gmail.konradkalita.lab2_and_3.MatrixTest" time="0"/>
-  <testcase name="Should_AddFiveToEachMatrixElement" classname="com.gmail.konradkalita.lab2_and_3.MatrixTest" time="0"/>
-  <testcase name="Should_SubtractFiveFromEachMatrixElement" classname="com.gmail.konradkalita.lab2_and_3.MatrixTest" time="0.001"/>
-  <testcase name="Should_ReturnMatrixWhereEachElementDividedByTwodiv" classname="com.gmail.konradkalita.lab2_and_3.MatrixTest" time="0.001"/>
-  <testcase name="Should_ReturnEachMatrixElementMultipliedByItself" classname="com.gmail.konradkalita.lab2_and_3.MatrixTest" time="0"/>
-  <testcase name="Should_ReturnMatrixWithEveryElementSetToZero_When_SubtractingMatrixFromItself" classname="com.gmail.konradkalita.lab2_and_3.MatrixTest" time="0"/>
-  <testcase name="Should_ReturnArrayWithTwoElements_Where_OneElementIsRowCountAndSecondOneIsColumnCount" classname="com.gmail.konradkalita.lab2_and_3.MatrixTest" time="0"/>
+  <testcase name="Should_CheckIfParagraphHasHtmlMarkups" classname="com.gmail.konradkalita.lab4.ParagraphTest" time="0"/>
+  <testcase name="Should_ThrowIllegalArgumentException_When_PassInNull" classname="com.gmail.konradkalita.lab4.ParagraphTest" time="0"/>
 </testsuite>
