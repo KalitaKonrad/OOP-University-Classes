@@ -13,7 +13,7 @@
     <property name="sun.java.launcher" value="SUN_STANDARD"/>
     <property name="user.country" value="GB"/>
     <property name="sun.boot.library.path" value="/Library/Java/JavaVirtualMachines/jdk-12.0.1.jdk/Contents/Home/lib"/>
-    <property name="sun.java.command" value="/Users/konradkalita/Desktop/OOP-University-Classes/labki/target/surefire/surefirebooter599827214193639979.jar /Users/konradkalita/Desktop/OOP-University-Classes/labki/target/surefire 2019-10-25T12-24-59_914-jvmRun1 surefire5985654912674179879tmp surefire_013980962132339050931tmp"/>
+    <property name="sun.java.command" value="/Users/konradkalita/Desktop/OOP-University-Classes/labki/target/surefire/surefirebooter2825745068713402109.jar /Users/konradkalita/Desktop/OOP-University-Classes/labki/target/surefire 2019-10-29T14-15-53_078-jvmRun1 surefire5894468634905389315tmp surefire_02132214444546378900tmp"/>
     <property name="http.nonProxyHosts" value="local|*.local|169.254/16|*.169.254/16"/>
     <property name="jdk.debug" value="release"/>
     <property name="surefire.test.class.path" value="/Users/konradkalita/Desktop/OOP-University-Classes/labki/target/test-classes:/Users/konradkalita/Desktop/OOP-University-Classes/labki/target/classes:/Users/konradkalita/.m2/repository/org/junit/jupiter/junit-jupiter-api/5.4.2/junit-jupiter-api-5.4.2.jar:/Users/konradkalita/.m2/repository/org/apiguardian/apiguardian-api/1.0.0/apiguardian-api-1.0.0.jar:/Users/konradkalita/.m2/repository/org/opentest4j/opentest4j/1.1.1/opentest4j-1.1.1.jar:/Users/konradkalita/.m2/repository/org/junit/platform/junit-platform-commons/1.4.2/junit-platform-commons-1.4.2.jar:/Users/konradkalita/.m2/repository/org/junit/jupiter/junit-jupiter-engine/5.4.2/junit-jupiter-engine-5.4.2.jar:/Users/konradkalita/.m2/repository/org/junit/platform/junit-platform-engine/1.4.2/junit-platform-engine-1.4.2.jar:"/>
@@ -30,7 +30,7 @@
     <property name="java.vm.specification.vendor" value="Oracle Corporation"/>
     <property name="java.specification.name" value="Java Platform API Specification"/>
     <property name="java.awt.graphicsenv" value="sun.awt.CGraphicsEnvironment"/>
-    <property name="surefire.real.class.path" value="/Users/konradkalita/Desktop/OOP-University-Classes/labki/target/surefire/surefirebooter599827214193639979.jar"/>
+    <property name="surefire.real.class.path" value="/Users/konradkalita/Desktop/OOP-University-Classes/labki/target/surefire/surefirebooter2825745068713402109.jar"/>
     <property name="sun.management.compiler" value="HotSpot 64-Bit Tiered Compilers"/>
     <property name="ftp.nonProxyHosts" value="local|*.local|169.254/16|*.169.254/16"/>
     <property name="java.runtime.version" value="12.0.1+12"/>
