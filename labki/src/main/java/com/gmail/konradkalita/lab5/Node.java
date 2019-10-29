@@ -1,6 +1,8 @@
 package com.gmail.konradkalita.lab5;
 
-public abstract class Node
+abstract public class Node
 {
     private int sign;
+    public abstract double evaluate();
+    public abstract String toString();
 }
