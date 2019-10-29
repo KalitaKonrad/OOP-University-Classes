@@ -1,9 +1,12 @@
 package com.gmail.konradkalita.lab4;
 
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.Assertions;
 
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.io.PrintStream;
 import java.io.UnsupportedEncodingException;
 
@@ -11,12 +14,32 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class SectionTest
 {
+    private ByteArrayOutputStream os;
+    private PrintStream ps;
+    @BeforeEach
+    void openStreams()
+    {
+        os = new ByteArrayOutputStream();
+        ps = new PrintStream(os);
+    }
+
+    @AfterEach
+    void closeStreams()
+    {
+        try
+        {
+            os.close();
+        } catch (IOException e)
+        {
+            e.printStackTrace();
+        }
+        ps.close();
+    }
+
     @Test
     void Should_CheckIfSectionHasHtmlMarkups()
     {
         String sectionTitle = "Umiejętności";
-        ByteArrayOutputStream os = new ByteArrayOutputStream();
-        PrintStream ps = new PrintStream(os);
 
         new Section(sectionTitle).writeHTML(ps);
         String result = null;

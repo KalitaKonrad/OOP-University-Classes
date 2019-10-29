@@ -1,23 +1,42 @@
 package com.gmail.konradkalita.lab4;
 
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.io.ByteArrayOutputStream;
-import java.io.PrintStream;
-import java.io.UnsupportedEncodingException;
+import java.io.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class ParagraphTest
 {
+    private ByteArrayOutputStream os;
+    private PrintStream ps;
+    @BeforeEach
+    void openStreams()
+    {
+        os = new ByteArrayOutputStream();
+        ps = new PrintStream(os);
+    }
+
+    @AfterEach
+    void closeStreams()
+    {
+        try
+        {
+            os.close();
+        } catch (IOException e)
+        {
+            e.printStackTrace();
+        }
+        ps.close();
+    }
 
     @Test
     void Should_CheckIfParagraphHasHtmlMarkups()
     {
         String paragraphContent = "Java";
-        ByteArrayOutputStream os = new ByteArrayOutputStream();
-        PrintStream ps = new PrintStream(os);
 
         new Paragraph(paragraphContent).writeHTML(ps);
         String result = null;
