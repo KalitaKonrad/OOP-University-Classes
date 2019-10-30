@@ -12,6 +12,8 @@ public class Sum extends Node
         args.add(n2);
     }
 
+    public Sum() {};
+
     Sum add(Node n){
         args.add(n);
         return this;
@@ -32,7 +34,7 @@ public class Sum extends Node
     public double evaluate() {
         double result = 0;
         args.forEach(Node::evaluate);
-        // oblicz sumę wartości zwróconych przez wywołanie evaluate skłądników sumy
+        // oblicz sumę wartości zwróconych przez wywołanie evaluate skłądników sumy ???????
         return getSign() * result;
     }
 
@@ -48,14 +50,13 @@ public class Sum extends Node
         {
             builder.append("-(");
         }
-
-        //zaimplementuj
+        args.forEach(Node::toString);
+        //zaimplementuj ???????????
 
         if(getSign() < 0 )
         {
             builder.append(")");
         }
-
         return builder.toString();
     }
 }

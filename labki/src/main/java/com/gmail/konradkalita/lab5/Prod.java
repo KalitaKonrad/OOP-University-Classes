@@ -54,9 +54,8 @@ public class Prod extends Node
     {
         StringBuilder builder =  new StringBuilder();
         if (getSign() < 0) builder.append("-");
+        args.forEach(Node::toString);
         // ...
         return builder.toString();
     }
-
-
 }

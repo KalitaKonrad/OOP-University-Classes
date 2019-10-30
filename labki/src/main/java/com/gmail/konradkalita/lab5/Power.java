@@ -3,20 +3,20 @@ package com.gmail.konradkalita.lab5;
 
 public class Power extends Node
 {
-    private double p;
+    private double power;
     private Node arg;
 
-    Power(Node arg, double p)
+    Power(Node arg, double power)
     {
         this.arg = arg;
-        this.p = p;
+        this.power = power;
     }
 
     @Override
     public double evaluate()
     {
         double argVal = arg.evaluate();
-        return Math.pow(argVal,p);
+        return Math.pow(argVal,power);
     }
 
     @Override
@@ -44,7 +44,7 @@ public class Power extends Node
             builder.append(")");
         }
         builder.append("^");
-        builder.append(p);
+        builder.append(power);
         return builder.toString();
     }
 }

@@ -20,7 +20,7 @@ public class Variable extends Node
 
     @Override
     public String toString() {
-        String sgn=getSign() < 0 ? "-" : "";
-        return sgn+name;
+        String sgn = getSign() < 0 ? "-" : "";
+        return sgn + name;
     }
 }
