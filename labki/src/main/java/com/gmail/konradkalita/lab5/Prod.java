@@ -7,40 +7,43 @@ public class Prod extends Node
 {
     private List<Node> args = new ArrayList<>();
 
-    Prod(Node n1){
+    public Prod() {}
+
+    public Prod(Node n1){
         args.add(n1);
     }
 
-    Prod(double c){
+    public Prod(double c){
         this(new Constant(c));
     }
 
-    Prod(Node n1, Node n2){
+    public Prod(Node n1, Node n2){
         args.add(n1);
         args.add(n2);
     }
 
-    Prod(double c, Node n){
+    public Prod(double c, Node n){
         this(new Constant(c), n);
     }
 
-    Prod mul(Node n){
+    public Prod mul(Node n){
         args.add(n);
         return this;
     }
 
-    Prod mul(double c){
+    public Prod mul(double c){
         args.add(new Constant(c));
         return this;
     }
 
-
     @Override
     public double evaluate() {
         double result = 1;
-        args.forEach(Node::evaluate);
+        result *= args.stream()
+                .mapToDouble(Node::evaluate)
+                .sum();
         // oblicz iloczyn czynników wołąjąc ich metodę evaluate
-        return getSign() * result;
+        return sign * result;
     }
 
     @Override
@@ -53,7 +56,7 @@ public class Prod extends Node
     public String toString()
     {
         StringBuilder builder =  new StringBuilder();
-        if (getSign() < 0) builder.append("-");
+        if (sign < 0) builder.append("-");
         args.forEach(Node::toString);
         // ...
         return builder.toString();

@@ -28,9 +28,9 @@ public class Power extends Node
     @Override
     public String toString() {
         StringBuilder builder = new StringBuilder();
-        if (getSign() < 0) builder.append("-");
-        int argSign = arg.getSign();
-        int count = getArgumentsCount();
+        if (sign < 0) builder.append("-");
+        int argSign = arg.sign;
+        int count = arg.getArgumentsCount();
         boolean useBracket = false;
         if(argSign < 0 || count > 1) useBracket = true;
         String argString = arg.toString();

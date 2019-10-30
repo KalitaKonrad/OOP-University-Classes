@@ -10,19 +10,20 @@ public class Constant extends Node
 
     Constant(double value)
     {
-        this.value = value;
+        this.sign = value < 0 ? -1 : 1;
+        this.value = value < 0? -value : value;
     }
 
     @Override
     public double evaluate()
     {
-        return getSign() *  value;
+        return sign * value;
     }
 
     @Override
     public String toString()
     {
-        String sgn = getSign() < 0 ? "-" : "";
+        String sgn = sign < 0 ? "-" : "";
         DecimalFormat format = new DecimalFormat("0.####", new DecimalFormatSymbols(Locale.US));
         return sgn + format.format(value);
     }

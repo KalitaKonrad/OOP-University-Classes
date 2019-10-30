@@ -2,17 +2,19 @@ package com.gmail.konradkalita.lab5;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class Sum extends Node
 {
     private List<Node> args = new ArrayList<>();
 
-    Sum(Node n1, Node n2){
+    public Sum() {}
+    public Sum(Node n1, Node n2){
         args.add(n1);
         args.add(n2);
     }
-
-    public Sum() {};
 
     Sum add(Node n){
         args.add(n);
@@ -33,9 +35,11 @@ public class Sum extends Node
     @Override
     public double evaluate() {
         double result = 0;
-        args.forEach(Node::evaluate);
+        result += args.stream()
+                .mapToDouble(Node::evaluate)
+                .sum();
         // oblicz sumę wartości zwróconych przez wywołanie evaluate skłądników sumy ???????
-        return getSign() * result;
+        return sign * result;
     }
 
     @Override
@@ -46,14 +50,17 @@ public class Sum extends Node
 
     public String toString(){
         StringBuilder builder =  new StringBuilder();
-        if(getSign() < 0 )
+        if(sign < 0 )
         {
             builder.append("-(");
         }
-        args.forEach(Node::toString);
+        builder.append(
+                args.stream()
+                    .map(Node::toString)
+                        .collect(Collectors.joining()));
         //zaimplementuj ???????????
 
-        if(getSign() < 0 )
+        if(sign < 0 )
         {
             builder.append(")");
         }
