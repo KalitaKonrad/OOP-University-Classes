@@ -19,7 +19,8 @@ public class Power extends Node
         return Math.pow(argVal,p);
     }
 
-    int getArgumentsCount()
+    @Override
+    public int getArgumentsCount()
     {
         return 1;
     }

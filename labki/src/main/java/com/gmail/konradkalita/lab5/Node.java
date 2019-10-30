@@ -7,4 +7,8 @@ abstract public class Node
     public abstract double evaluate();
     public abstract String toString();
     public int getSign(){ return sign; }
+    public int getArgumentsCount()
+    {
+        return 0;
+    }
 }

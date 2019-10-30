@@ -8,6 +8,11 @@ public class Constant extends Node
 {
     private double value;
 
+    Constant(double value)
+    {
+        this.value = value;
+    }
+
     @Override
     public double evaluate()
     {
