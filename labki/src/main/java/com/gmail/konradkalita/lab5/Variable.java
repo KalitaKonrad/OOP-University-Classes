@@ -14,7 +14,7 @@ public class Variable extends Node
     }
 
     @Override
-    double evaluate() {
+    public double evaluate() {
         return getSign() * value;
     }
 
