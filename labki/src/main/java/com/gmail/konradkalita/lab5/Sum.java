@@ -2,6 +2,7 @@ package com.gmail.konradkalita.lab5;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.StringJoiner;
 import java.util.stream.Collector;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -34,12 +35,7 @@ public class Sum extends Node
 
     @Override
     public double evaluate() {
-        double result = 0;
-        result += args.stream()
-                .mapToDouble(Node::evaluate)
-                .sum();
-        // oblicz sumę wartości zwróconych przez wywołanie evaluate skłądników sumy ???????
-        return sign * result;
+        return sign * args.stream().mapToDouble(Node::evaluate).sum();
     }
 
     @Override
@@ -54,11 +50,10 @@ public class Sum extends Node
         {
             builder.append("-(");
         }
-        builder.append(
-                args.stream()
-                    .map(Node::toString)
-                        .collect(Collectors.joining()));
-        //zaimplementuj ???????????
+
+        StringJoiner joiner = new StringJoiner("+");
+        args.forEach(node -> joiner.add(node.toString()));
+        builder.append(joiner.toString());
 
         if(sign < 0 )
         {

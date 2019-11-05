@@ -29,7 +29,7 @@ public class Power extends Node
     public String toString() {
         StringBuilder builder = new StringBuilder();
         if (sign < 0) builder.append("-");
-        int argSign = arg.sign;
+        int argSign = arg.getSign();
         int count = arg.getArgumentsCount();
         boolean useBracket = false;
         if(argSign < 0 || count > 1) useBracket = true;
@@ -44,6 +44,7 @@ public class Power extends Node
             builder.append(")");
         }
         builder.append("^");
+        // checking if power is int
         builder.append(power);
         return builder.toString();
     }

@@ -3,7 +3,7 @@ package com.gmail.konradkalita.lab5;
 
 abstract public class Node
 {
-    protected int sign = -1;
+    protected int sign = 1;
 
     public Node minus() {
         sign = -1;
@@ -13,6 +13,10 @@ abstract public class Node
     public Node plus() {
         sign = 1;
         return this;
+    }
+
+    public int getSign() {
+        return this.sign;
     }
 
     public int getArgumentsCount()

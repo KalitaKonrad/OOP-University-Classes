@@ -2,6 +2,7 @@ package com.gmail.konradkalita.lab5;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class Prod extends Node
 {
@@ -38,12 +39,9 @@ public class Prod extends Node
 
     @Override
     public double evaluate() {
-        double result = 1;
-        result *= args.stream()
+        return sign * args.stream()
                 .mapToDouble(Node::evaluate)
-                .sum();
-        // oblicz iloczyn czynników wołąjąc ich metodę evaluate
-        return sign * result;
+                .reduce(1, (acc, current) -> acc * current);
     }
 
     @Override
@@ -57,8 +55,11 @@ public class Prod extends Node
     {
         StringBuilder builder =  new StringBuilder();
         if (sign < 0) builder.append("-");
-        args.forEach(Node::toString);
-        // ...
+        builder.append(
+                args.stream()
+                .map(Node::toString)
+                .collect(Collectors.joining())
+        );
         return builder.toString();
     }
 }

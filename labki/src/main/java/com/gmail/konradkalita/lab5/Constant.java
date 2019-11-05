@@ -11,7 +11,7 @@ public class Constant extends Node
     Constant(double value)
     {
         this.sign = value < 0 ? -1 : 1;
-        this.value = value < 0? -value : value;
+        this.value = value < 0 ? -value : value;
     }
 
     @Override
