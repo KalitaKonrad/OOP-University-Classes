@@ -27,4 +27,14 @@ public class Constant extends Node
         DecimalFormat format = new DecimalFormat("0.####", new DecimalFormatSymbols(Locale.US));
         return sgn + format.format(value);
     }
+
+    @Override
+    Node diff(Variable var) {
+        return new Constant(0);
+    }
+
+    @Override
+    boolean isZero() {
+        return this.value == 0;
+    }
 }
