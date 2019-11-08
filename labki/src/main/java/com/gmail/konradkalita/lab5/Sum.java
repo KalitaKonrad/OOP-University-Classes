@@ -1,6 +1,7 @@
 package com.gmail.konradkalita.lab5;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.StringJoiner;
 import java.util.stream.Collector;
@@ -12,6 +13,11 @@ public class Sum extends Node
     private List<Node> args = new ArrayList<>();
 
     public Sum() {}
+
+    public Sum(Node ... nodes) {
+        args.addAll(Arrays.asList(nodes));
+    }
+
     public Sum(Node n1, Node n2){
         args.add(n1);
         args.add(n2);
@@ -60,5 +66,19 @@ public class Sum extends Node
             builder.append(")");
         }
         return builder.toString();
+    }
+
+    @Override
+    Node diff(Variable var) {
+        Sum r = new Sum();
+        for (Node n : args) {
+            r.add(n.diff(var));
+        }
+        return r;
+    }
+
+    @Override
+    boolean isZero() {
+        return this.evaluate() == 0;
     }
 }

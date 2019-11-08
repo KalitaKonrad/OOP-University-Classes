@@ -26,7 +26,8 @@ public class Power extends Node
     }
 
     @Override
-    public String toString() {
+    public String toString()
+    {
         StringBuilder builder = new StringBuilder();
         if (sign < 0) builder.append("-");
         int argSign = arg.getSign();
@@ -47,5 +48,19 @@ public class Power extends Node
         // checking if power is int
         builder.append(power);
         return builder.toString();
+    }
+
+    @Override
+    Node diff(Variable var)
+    {
+        Prod r = new Prod(sign * power, new Power(arg, power - 1));
+        r.mul(arg.diff(var));
+        return r;
+    }
+
+    @Override
+    boolean isZero()
+    {
+        return arg.isZero();
     }
 }
