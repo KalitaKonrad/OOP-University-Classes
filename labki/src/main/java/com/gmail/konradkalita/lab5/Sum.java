@@ -79,6 +79,6 @@ public class Sum extends Node
 
     @Override
     boolean isZero() {
-        return this.evaluate() == 0;
+        return (this.evaluate() > -0.0000001 && this.evaluate() < 0.0000001);
     }
 }

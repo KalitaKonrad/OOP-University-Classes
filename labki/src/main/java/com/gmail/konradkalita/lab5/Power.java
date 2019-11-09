@@ -67,6 +67,6 @@ public class Power extends Node
     @Override
     boolean isZero()
     {
-        return arg.isZero();
+        return (this.evaluate() > -0.0000001 && this.evaluate() < 0.0000001);
     }
 }

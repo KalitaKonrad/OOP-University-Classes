@@ -1,5 +1,7 @@
 package com.gmail.konradkalita.lab5;
 
+import java.math.BigDecimal;
+import java.math.MathContext;
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
 import java.util.Locale;
@@ -35,6 +37,6 @@ public class Constant extends Node
 
     @Override
     boolean isZero() {
-        return this.value == 0;
+        return (this.evaluate() > -0.0000001 && this.evaluate() < 0.0000001);
     }
 }
