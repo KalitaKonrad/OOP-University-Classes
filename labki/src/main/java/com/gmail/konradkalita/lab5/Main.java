@@ -1,19 +1,32 @@
 package com.gmail.konradkalita.lab5;
 
+import java.util.Locale;
+
 public class Main
 {
     public static void main(String[] args)
     {
-        buildAndPrint();
+        //buildAndPrint();
+        //buildAndEvaluate();
+        //defineCircle();
     }
 
-    static void buildAndPrint(){
+    static void defineCircle(){
         Variable x = new Variable("x");
-        Node exp = new Sum()
-                .add(2.1,new Power(x,3))
+        Variable y = new Variable("y");
+        Node circle = new Sum()
                 .add(new Power(x,2))
-                .add(-2,x)
-                .add(7);
-        System.out.println(exp.toString());
+                .add(new Power(y,2))
+                .add(8,x)
+                .add(4,y)
+                .add(16);
+        System.out.println(circle.toString());
+
+        double xv = 100*(Math.random()-.5);
+        double yv = 100*(Math.random()-.5);
+        x.setValue(xv);
+        y.setValue(yv);
+        double fv = circle.evaluate();
+        System.out.print(String.format("Punkt (%f,%f) leży %s koła %s",xv,yv,(fv<0?"wewnątrz":"na zewnątrz"),circle.toString()));
     }
 }
