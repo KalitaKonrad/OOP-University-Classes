@@ -45,8 +45,14 @@ public class Power extends Node
             builder.append(")");
         }
         builder.append("^");
-        // checking if power is int
-        builder.append(power);
+        int isInteger = 0;
+        if(power % 1 == 0) { // check if power is an integer
+            isInteger = (int)power;
+            builder.append(isInteger);
+        }
+        else {
+            builder.append(power);
+        }
         return builder.toString();
     }
 

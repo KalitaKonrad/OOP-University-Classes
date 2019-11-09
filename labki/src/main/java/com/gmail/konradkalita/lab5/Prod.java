@@ -53,14 +53,22 @@ public class Prod extends Node
 
     public String toString()
     {
-        StringBuilder builder =  new StringBuilder();
-        if (sign < 0) builder.append("-");
-        builder.append(
-                args.stream()
-                .map(Node::toString)
-                .collect(Collectors.joining())
-        );
-        return builder.toString();
+        StringBuilder b =  new StringBuilder();
+        if(sign<0)b.append("-");
+        for(Node arg: args) {
+            int argSign = arg.getSign();
+            int cnt = arg.getArgumentsCount();
+            boolean useBracket = false;
+            if (argSign < 0 || cnt > 1) useBracket = true;
+            String argString = arg.toString();
+            if(useBracket)b.append("(");
+            b.append(argString);
+            if(useBracket)b.append(")");
+            if(args.indexOf(arg)!=args.size()-1){
+                b.append("*");
+            }
+        }
+        return b.toString();
     }
 
     @Override

@@ -57,7 +57,7 @@ public class Sum extends Node
             builder.append("-(");
         }
 
-        StringJoiner joiner = new StringJoiner("+");
+        StringJoiner joiner = new StringJoiner(" + ");
         args.forEach(node -> joiner.add(node.toString()));
         builder.append(joiner.toString());
 
