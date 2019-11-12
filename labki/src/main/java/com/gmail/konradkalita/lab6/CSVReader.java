@@ -17,6 +17,7 @@ public class CSVReader
     private List<String> columnLabels = new ArrayList<>();
     private Map<String,Integer> columnLabelsToInt = new HashMap<>();
     private String[] current;
+    private int recordLength;
 
     public CSVReader(String filename) throws IOException
     {
@@ -62,6 +63,7 @@ public class CSVReader
         try {
             Optional<String> line = Optional.ofNullable(reader.readLine());
             line.ifPresent(s -> this.current = s.split(delimiter));
+            line.ifPresent(s -> this.recordLength = s.length());
             return line.isPresent();
         }
         catch (IOException e) {
@@ -75,5 +77,26 @@ public class CSVReader
         return this.columnLabels;
     }
 
+    public int getRecordLength() {
+        return this.recordLength;
+    }
 
+    public boolean isMissing(int columnIndex) throws IllegalArgumentException {
+        if (columnIndex >= this.columnLabels.size() || columnIndex < 0) {
+            throw new IllegalArgumentException("Column index out of bounds");
+        }
+        return current[columnIndex].equals("");
+    }
+
+    public boolean isMissing(String columnLabel) {
+        return columnLabelsToInt.containsKey(columnLabel);
+    }
+
+    String get(int columnIndex) {
+        return isMissing(columnIndex) ? "" : current[columnIndex];
+    }
+
+    String get(String columnLabel) {
+        return isMissing(columnLabel) ? "" : current[columnLabelsToInt.get(columnLabel)];
+    }
 }
