@@ -99,4 +99,58 @@ public class CSVReader
     String get(String columnLabel) {
         return isMissing(columnLabel) ? "" : current[columnLabelsToInt.get(columnLabel)];
     }
+
+    int getInt(int columnIndex) throws EmptyColumnValueException {
+        if(isMissing(columnIndex)) {
+            throw new EmptyColumnValueException(columnIndex);
+        }
+        else {
+            return Integer.parseInt(current[columnIndex]);
+        }
+    }
+
+    int getInt(String columnLabel) throws EmptyColumnValueException {
+        if(isMissing(columnLabel)) {
+            throw new EmptyColumnValueException(columnLabel);
+        }
+        else {
+            return Integer.parseInt(current[columnLabelsToInt.get(columnLabel)]);
+        }
+    }
+
+    Long getLong(int columnIndex) throws EmptyColumnValueException {
+        if(isMissing(columnIndex)) {
+            throw new EmptyColumnValueException(columnIndex);
+        }
+        else {
+            return Long.parseLong(current[columnIndex]);
+        }
+    }
+
+    Long getLong(String columnLabel) throws EmptyColumnValueException {
+        if(isMissing(columnLabel)) {
+            throw new EmptyColumnValueException(columnLabel);
+        }
+        else {
+            return Long.parseLong(current[columnLabelsToInt.get(columnLabel)]);
+        }
+    }
+
+    Double getDouble(int columnIndex) throws EmptyColumnValueException {
+        if(isMissing(columnIndex)) {
+            throw new EmptyColumnValueException(columnIndex);
+        }
+        else {
+            return Double.parseDouble(current[columnIndex]);
+        }
+    }
+
+    Double getDouble(String columnLabel) throws EmptyColumnValueException {
+        if(isMissing(columnLabel)) {
+            throw new EmptyColumnValueException(columnLabel);
+        }
+        else {
+            return Double.parseDouble(current[columnLabelsToInt.get(columnLabel)]);
+        }
+    }
 }
