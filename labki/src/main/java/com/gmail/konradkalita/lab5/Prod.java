@@ -53,6 +53,10 @@ public class Prod extends Node
 
     public String toString()
     {
+        if (args.stream()
+                .anyMatch(node -> (node.evaluate() == 0 && node instanceof Constant))) {
+            return new Constant(0).toString();
+        }
         StringBuilder b =  new StringBuilder();
         if(sign<0)b.append("-");
         for(Node arg: args) {
@@ -75,7 +79,7 @@ public class Prod extends Node
     Node diff(Variable var) {
         Sum r = new Sum();
         for(int i = 0; i < args.size(); i++){
-            Prod m= new Prod();
+            Prod m = new Prod();
             for(int j = 0; j < args.size(); j++){
                 Node f = args.get(j);
                 if(j == i) {
@@ -85,13 +89,16 @@ public class Prod extends Node
                     m.mul(f);
                 }
             }
-            r.add(m);
+            if(!m.isZero(var)) {
+                r.add(m);
+            }
         }
         return r;
     }
 
     @Override
-    boolean isZero(){
-        return (this.evaluate() > -0.0000001 && this.evaluate() < 0.0000001);
+    boolean isZero(Variable var){
+        return args.stream()
+                .anyMatch(node -> (node.evaluate() == 0 && node instanceof Constant)); // if
     }
 }

@@ -51,14 +51,22 @@ public class Sum extends Node
     }
 
     public String toString(){
+        if (args.size() == 0) {
+            return new Constant(0).toString();
+        }
+
         StringBuilder builder =  new StringBuilder();
+
         if(sign < 0 )
         {
             builder.append("-(");
         }
 
         StringJoiner joiner = new StringJoiner(" + ");
-        args.forEach(node -> joiner.add(node.toString()));
+        args.stream()
+            .filter(node -> !node.toString().equals("0") && !node.toString().isEmpty())
+            .forEach(node -> joiner.add(node.toString()));
+
         builder.append(joiner.toString());
 
         if(sign < 0 )
@@ -70,15 +78,16 @@ public class Sum extends Node
 
     @Override
     Node diff(Variable var) {
-        Sum r = new Sum();
-        for (Node n : args) {
-            r.add(n.diff(var));
-        }
-        return r;
+        return new Sum(
+                args.stream()
+                    .filter(node -> !node.isZero(var))
+                    .map(node -> node.diff(var))
+                    .toArray(Node[]::new));
     }
 
     @Override
-    boolean isZero() {
-        return (this.evaluate() > -0.0000001 && this.evaluate() < 0.0000001);
+    boolean isZero(Variable var) {
+        return args.stream()
+                .allMatch(node -> node.isZero(var));
     }
 }

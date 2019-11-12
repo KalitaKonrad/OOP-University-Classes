@@ -32,7 +32,7 @@ abstract public class Node
         return "";
     }
 
-    abstract boolean isZero();
+    abstract boolean isZero(Variable var);
 
     abstract Node diff(Variable var);
 }

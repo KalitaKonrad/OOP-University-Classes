@@ -38,7 +38,7 @@ class lab5Test
     }
 
     @Test
-    @DisplayName("diff_ShouldReturn: `0*x^3 + 2*3*x^2*1 + 2*x^1*1 + 0*x + (-2)*1 + 0` WhenInput: `exp=2*x^3 + x^2 + (-2)*x + 7`")
+    @DisplayName("diff_ShouldReturn: `2*(3*x^2*1) + 2*x^1*1 + (-2)*1` WhenInput: `exp=2*x^3 + x^2 + (-2)*x + 7`")
     void diff_Test()
     {
         Variable x = new Variable("x");
@@ -50,11 +50,11 @@ class lab5Test
 
         Node d = exp.diff(x);
         assertEquals("2*x^3 + x^2 + (-2)*x + 7", exp.toString());
-        assertEquals("0*x^3 + 2*(3*x^2*1) + 2*x^1*1 + 0*x + (-2)*1 + 0", d.toString());
+        assertEquals("2*(3*x^2*1) + 2*x^1*1 + (-2)*1", d.toString());
     }
 
     @Test
-    @DisplayName("diff_ShouldReturn: `2*x^1*1 + 2*y^1*0 + 0*x + 8*1 + 0*y + 4*0 + 0` WhenInput: x^2 + y^2 + 8*x + 4*y + 16")
+    @DisplayName("diff_on_x_ShouldReturn: `2*x^1*1 + 8*1` WhenInput: x^2 + y^2 + 8*x + 4*y + 16")
     void diff_Test2()
     {
         Variable x = new Variable("x");
@@ -65,7 +65,7 @@ class lab5Test
                 .add(8,x)
                 .add(4,y)
                 .add(16);
-        assertEquals("2*x^1*1 + 2*y^1*0 + 0*x + 8*1 + 0*y + 4*0 + 0", circle.diff(x).toString()); // derivative on var X
-        assertEquals("2*x^1*0 + 2*y^1*1 + 0*x + 8*0 + 0*y + 4*1 + 0", circle.diff(y).toString()); // derivative on var Y
+        assertEquals("2*x^1*1 + 8*1", circle.diff(x).toString()); // derivative on var X
+        assertEquals("2*y^1*1 + 4*1", circle.diff(y).toString()); // derivative on var Y
     }
 }

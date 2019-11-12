@@ -21,6 +21,10 @@ public class Variable extends Node
         value = d;
     }
 
+    String getName() {
+        return this.name;
+    }
+
     @Override
     public double evaluate()
     {
@@ -35,12 +39,12 @@ public class Variable extends Node
 
     @Override
     Node diff(Variable var) {
-        if(var.name.equals(name)) return new Constant(sign);
+        if(var.name.equals(name)) return new Constant(1);
         else return new Constant(0);
     }
 
     @Override
-    boolean isZero(){
-        return this.evaluate() == 0;
+    boolean isZero(Variable var){
+        return !var.getName().equals(name);
     }
 }
