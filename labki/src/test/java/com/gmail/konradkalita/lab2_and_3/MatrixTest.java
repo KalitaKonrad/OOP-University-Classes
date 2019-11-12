@@ -48,9 +48,9 @@ class MatrixTest
     @Test
     void Should_GetMatrixValueFromCertainGivenPosition()
     {
-        assertEquals(matrix.getValue(1, 1), 1);
-        assertEquals(matrix.getValue(2, 2), 5);
-        assertEquals(matrix.getValue(3, 3), 9);
+        assertEquals(matrix.getValue(0, 0), 1);
+        assertEquals(matrix.getValue(1, 1), 5);
+        assertEquals(matrix.getValue(2, 2), 9);
     }
 
     @Test

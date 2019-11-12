@@ -82,23 +82,19 @@ public class Matrix
     //2.3
     public double getValue(int r, int c) throws ArrayIndexOutOfBoundsException
     {
-        if (r > rows || r < 1 || c > cols || c < 1)
+        if (r >= rows || r < 0 || c >= cols || c < 0)
         {
             throw new ArrayIndexOutOfBoundsException("Wrong row or/and column request provided!");
         }
-        r--;
-        c--;
         return data[r * cols + c];
     }
 
     public void setValue(int r, int c, double value) throws IndexOutOfBoundsException
     {
-        if (r > rows || r < 1 || c > cols || c < 1)
+        if (r >= rows || r < 0 || c >= cols || c < 0)
         {
             throw new ArrayIndexOutOfBoundsException("Wrong row or/and column request provided!");
         }
-        r--;
-        c--;
         data[r * cols + c] = value;
     }
 
@@ -286,9 +282,9 @@ public class Matrix
             {
                 for (int j = 0; j < m.getCols(); j++)
                 { // row * column multiplication (to produce single element)
-                    currentElement += this.getValue(thisMatrixRow + 1, j + 1) * m.getValue(j + 1, mMatrixColumn + 1);
+                    currentElement += this.getValue(thisMatrixRow , j) * m.getValue(j, mMatrixColumn);
                 }
-                newMatrix.setValue(thisMatrixRow + 1, mMatrixColumn + 1, currentElement);
+                newMatrix.setValue(thisMatrixRow, mMatrixColumn, currentElement);
                 currentElement = 0;
             }
         }
