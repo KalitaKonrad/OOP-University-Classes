@@ -204,14 +204,25 @@ class MatrixTest
     }
 
     @Test
-    void Should_ReturnSumOfEachColumn_WhenAxisIsZero()
+    void Should_ReturnSumOfEachColumn_WhenAxisValueIsZero()
     {
         assertEquals("[4.0, 5.0, 6.0]", matrix.mean(0).toString());
     }
 
     @Test
-    void Should_ReturnSumOfEachRow_WhenAxisIsOne()
+    void Should_ReturnSumOfEachRow_WhenAxisValueIsOne()
     {
         assertEquals("[2.0], [5.0], [8.0]", matrix.mean(1).toString());
+    }
+
+    @Test
+    void Should_ThrowIllegalArgumentException_WhenAxisValueIsOtherThanOneOrTwo()
+    {
+        try {
+            matrix.mean(343);
+        }
+        catch(IllegalArgumentException e) {
+            assertEquals("Wrong axis provided", e.getMessage());
+        }
     }
 }
