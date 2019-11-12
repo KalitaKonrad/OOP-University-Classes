@@ -306,4 +306,31 @@ public class Matrix
         }
         return frobeniusNorm;
     }
+
+    public Matrix mean(int axis) {
+        if (axis == 0) {
+            Matrix result = new Matrix(1, this.cols);
+            for (int col = 0; col < this.cols; col++) {
+                double averagePerColumn = 0;
+                for (int row = 0; row < this.rows; row++) {
+                    averagePerColumn += this.getValue(row, col);
+                }
+                result.setValue(0, col, averagePerColumn / (double)this.rows);
+            }
+            return result;
+        }
+        else if (axis == 1) {
+            Matrix result = new Matrix(this.rows, 1);
+            for (int row = 0; row < this.rows; row++) {
+                double averagePerRow = 0;
+                for (int col = 0; col < this.cols; col++) {
+                    averagePerRow += this.getValue(row, col);
+                }
+                result.setValue(row, 0, averagePerRow / (double)this.cols);
+            }
+            return result;
+        }
+        else
+            throw new IllegalArgumentException("Wrong axis provided");
+    }
 }

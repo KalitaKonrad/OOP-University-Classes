@@ -202,4 +202,16 @@ class MatrixTest
     {
         assertEquals(3*3, matrix.div(matrix).frobenius());
     }
+
+    @Test
+    void Should_ReturnSumOfEachColumn_WhenAxisIsZero()
+    {
+        assertEquals("[4.0, 5.0, 6.0]", matrix.mean(0).toString());
+    }
+
+    @Test
+    void Should_ReturnSumOfEachRow_WhenAxisIsOne()
+    {
+        assertEquals("[2.0], [5.0], [8.0]", matrix.mean(1).toString());
+    }
 }
