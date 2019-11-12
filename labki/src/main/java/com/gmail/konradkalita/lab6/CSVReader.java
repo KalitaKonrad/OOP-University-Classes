@@ -4,9 +4,8 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.io.*;
-import java.nio.Buffer;
 import java.util.*;
-import java.util.stream.IntStream;
+import java.util.Optional;
 
 @Getter
 @Setter
@@ -19,12 +18,12 @@ public class CSVReader
     private Map<String,Integer> columnLabelsToInt = new HashMap<>();
     private String[] current;
 
-    public CSVReader(String filename) throws FileNotFoundException
+    public CSVReader(String filename) throws IOException
     {
         this(filename, ",", false);
     }
 
-    public CSVReader(String filename, String delimiter) throws FileNotFoundException
+    public CSVReader(String filename, String delimiter) throws IOException
     {
         this(filename, delimiter, false);
     }
@@ -36,7 +35,7 @@ public class CSVReader
      * @param hasHeader - czy plik ma wiersz nagłówkowy
      */
 
-    public CSVReader(String filename, String delimiter, boolean hasHeader) throws FileNotFoundException
+    public CSVReader(String filename, String delimiter, boolean hasHeader) throws IOException
     {
         this.reader = new BufferedReader(new FileReader(filename));
         this.delimiter = delimiter;
@@ -60,18 +59,15 @@ public class CSVReader
 
     public boolean next()
     {
-        String line;
-        try
-        {
-            line = reader.readLine();
-        } catch (IOException e)
-        {
-            e.printStackTrace();
-            return false;
+        try {
+            Optional<String> line = Optional.ofNullable(reader.readLine());
+            line.ifPresent(s -> this.current = s.split(delimiter));
+            return line.isPresent();
         }
-
-        this.current = line.split(delimiter);
-        return true;
+        catch (IOException e) {
+            e.printStackTrace();
+        }
+        return false;
     }
 
 

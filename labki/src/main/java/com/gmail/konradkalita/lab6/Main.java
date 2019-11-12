@@ -13,8 +13,8 @@ public class Main
         try
         {
             reader = new CSVReader("./src/main/java/com/gmail/konradkalita/lab6/sample_csv_files/with-header.csv",
-                    ",",true);
-        } catch (FileNotFoundException e)
+                    ";",true);
+        } catch (IOException e)
         {
             e.printStackTrace();
             return;
