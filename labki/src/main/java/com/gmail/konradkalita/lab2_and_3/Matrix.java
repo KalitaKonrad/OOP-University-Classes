@@ -114,7 +114,10 @@ public class Matrix
             if (i % cols == 0 && i != 0)
             {
                 buffer.append("], ");
-                buffer.append("[" + data[i] + ", ");
+                buffer.append("[" + data[i]);
+                if(this.cols > 1) {
+                    buffer.append(", ");
+                }
             } else if ((i + 1) % cols == 0)
             {
                 buffer.append(data[i]); // no colon since it is the last element in a row
