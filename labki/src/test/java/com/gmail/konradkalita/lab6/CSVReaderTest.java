@@ -4,20 +4,42 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.io.IOException;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 class CSVReaderTest
 {
+    private CSVReader with_header;
+    private CSVReader no_header;
 
     @BeforeEach
     void setUp()
     {
-
+        try
+        {
+            this.with_header = new CSVReader("./src/main/java/com/gmail/konradkalita/lab6/sample_csv_files/with-header.csv",
+                    ";",true);
+            this.no_header = new CSVReader("./src/main/java/com/gmail/konradkalita/lab6/sample_csv_files/no-header.csv",
+                    ";",true);
+        } catch (IOException e)
+        {
+            e.printStackTrace();
+        }
     }
 
     @AfterEach
     void tearDown()
     {
+        try
+        {
+            with_header.close();
+            no_header.close();
+        } catch (IOException e)
+        {
+            e.printStackTrace();
+        }
+
     }
 
     @Test
@@ -28,12 +50,14 @@ class CSVReaderTest
     @Test
     void get1()
     {
+        
     }
 
     @Test
     void getInt()
     {
     }
+
 
     @Test
     void getInt1()

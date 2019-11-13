@@ -81,6 +81,10 @@ public class CSVReader
         return false;
     }
 
+    public void close() throws IOException
+    {
+        reader.close();
+    }
 
     public List<String> getColumnLabels() {
         return this.columnLabels;

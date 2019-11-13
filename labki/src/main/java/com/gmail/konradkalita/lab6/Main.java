@@ -21,8 +21,9 @@ public class Main
         }
         while(reader.next()) {
             for (int i = 0; i < reader.getCurrent().length; i++) {
-                System.out.println(reader.getCurrent()[i]);
+                System.out.print(reader.getCurrent()[i] + ",");
             }
+            System.out.println();
         }
     }
 }
