@@ -29,6 +29,15 @@ public class CSVReader
         this(filename, delimiter, false);
     }
 
+    public CSVReader(Reader reader, String delimiter, boolean hasHeader) {
+        this.reader = new BufferedReader(reader);
+        this.delimiter = delimiter;
+        this.hasHeader = hasHeader;
+
+        if(hasHeader) {
+            parseHeader();
+        }
+    }
     /**
      *
      * @param filename - nazwa pliku
