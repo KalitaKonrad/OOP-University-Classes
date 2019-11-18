@@ -23,9 +23,9 @@ public class CSVReader
 
     private static final String DEFAULT_TIME_FORMAT = "HH:mm:ss";
     private static final String DEFAULT_DATE_FORMAT = "dd.MM.yyyy";
-    private static final String DEFAULT_DATE_AND_TIME_FORMAT =
-            DEFAULT_TIME_FORMAT + " " + DEFAULT_DATE_FORMAT;
-    private static final String SPLIT_REGEX = "%s(?=([^\"]*\"[^\"]*\")*[^\"]*$)";
+    private static final String REGEX_FOR_SPLITTING = "%s(?=([^\"]*\"[^\"]*\")*[^\"]*$)";
+    private static final String DEFAULT_DATE_AND_TIME_FORMAT = DEFAULT_TIME_FORMAT + " " + DEFAULT_DATE_FORMAT;
+
 
     public CSVReader(String filename) throws IOException
     {
@@ -39,7 +39,7 @@ public class CSVReader
 
     public CSVReader(Reader reader, String delimiter, boolean hasHeader) {
         this.reader = new BufferedReader(reader);
-        this.delimiter = delimiter;
+        this.delimiter = createDelimiter(delimiter);
         this.hasHeader = hasHeader;
 
         if(hasHeader) {
@@ -92,6 +92,10 @@ public class CSVReader
     public void close() throws IOException
     {
         reader.close();
+    }
+
+    private String createDelimiter(String delimiter) {
+        return String.format(REGEX_FOR_SPLITTING, delimiter);
     }
 
     public List<String> getColumnLabels() {
