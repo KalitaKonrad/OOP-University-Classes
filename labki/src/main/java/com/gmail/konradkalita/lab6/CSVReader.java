@@ -102,7 +102,7 @@ public class CSVReader
         return this.recordLength;
     }
 
-    public boolean isMissing(int columnIndex) throws ColumnNotFoundException, EmptyColumnValueException
+    private boolean isMissing(int columnIndex) throws ColumnNotFoundException, EmptyColumnValueException
     {
         if(columnIndex >= columnLabels.size() || columnIndex < 0) {
             throw new ColumnNotFoundException(columnIndex);
@@ -113,7 +113,7 @@ public class CSVReader
         return current[columnIndex].isEmpty();
     }
 
-    public boolean isMissing(String columnLabel) throws ColumnNotFoundException, EmptyColumnValueException
+    private boolean isMissing(String columnLabel) throws ColumnNotFoundException, EmptyColumnValueException
     {
         int columnIndex = columnLabelsToInt.get(columnLabel);
         if(columnIndex >= columnLabels.size() || columnIndex < 0) {
@@ -134,11 +134,11 @@ public class CSVReader
     }
 
     int getInt(int columnIndex) throws EmptyColumnValueException, ColumnNotFoundException {
-        return Integer.parseInt(current[columnIndex]);
+        return Integer.parseInt(get(columnIndex));
     }
 
     int getInt(String columnLabel) throws EmptyColumnValueException, ColumnNotFoundException  {
-        return Integer.parseInt(current[columnLabelsToInt.get(columnLabel)]);
+        return Integer.parseInt(get(columnLabelsToInt.get(columnLabel)));
     }
 
     Long getLong(int columnIndex) throws EmptyColumnValueException, ColumnNotFoundException  {
