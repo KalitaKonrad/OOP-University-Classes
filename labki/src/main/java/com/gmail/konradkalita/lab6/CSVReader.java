@@ -4,6 +4,8 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.io.*;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.util.Optional;
 
@@ -18,6 +20,12 @@ public class CSVReader
     private Map<String,Integer> columnLabelsToInt = new HashMap<>();
     private String[] current;
     private int recordLength;
+
+    private static final String DEFAULT_TIME_FORMAT = "HH:mm:ss";
+    private static final String DEFAULT_DATE_FORMAT = "dd.MM.yyyy";
+    private static final String DEFAULT_DATE_AND_TIME_FORMAT =
+            DEFAULT_TIME_FORMAT + " " + DEFAULT_DATE_FORMAT;
+    private static final String SPLIT_REGEX = "%s(?=([^\"]*\"[^\"]*\")*[^\"]*$)";
 
     public CSVReader(String filename) throws IOException
     {
@@ -94,76 +102,62 @@ public class CSVReader
         return this.recordLength;
     }
 
-    public boolean isMissing(int columnIndex) throws IllegalArgumentException {
-        if (columnIndex >= this.columnLabels.size() || columnIndex < 0) {
-            throw new IllegalArgumentException("Column index out of bounds");
+    public boolean isMissing(int columnIndex) throws ColumnNotFoundException, EmptyColumnValueException
+    {
+        if(columnIndex >= columnLabels.size() || columnIndex < 0) {
+            throw new ColumnNotFoundException(columnIndex);
         }
-        return current[columnIndex].equals("");
+        if(current[columnIndex].equals("")) {
+            throw new EmptyColumnValueException(columnIndex);
+        }
+        return current[columnIndex].isEmpty();
     }
 
-    public boolean isMissing(String columnLabel) {
-        return columnLabelsToInt.containsKey(columnLabel);
+    public boolean isMissing(String columnLabel) throws ColumnNotFoundException, EmptyColumnValueException
+    {
+        int columnIndex = columnLabelsToInt.get(columnLabel);
+        if(columnIndex >= columnLabels.size() || columnIndex < 0) {
+            throw new ColumnNotFoundException(columnLabel);
+        }
+        if(current[columnIndex].equals("")) {
+            throw new EmptyColumnValueException(columnLabel);
+        }
+        return current[columnIndex].isEmpty();
     }
 
-    String get(int columnIndex) {
+    String get(int columnIndex) throws ColumnNotFoundException, EmptyColumnValueException {
         return isMissing(columnIndex) ? "" : current[columnIndex];
     }
 
-    String get(String columnLabel) {
+    String get(String columnLabel) throws ColumnNotFoundException, EmptyColumnValueException {
         return isMissing(columnLabel) ? "" : current[columnLabelsToInt.get(columnLabel)];
     }
 
-    int getInt(int columnIndex) throws EmptyColumnValueException {
-        if(isMissing(columnIndex)) {
-            throw new EmptyColumnValueException(columnIndex);
-        }
-        else {
-            return Integer.parseInt(current[columnIndex]);
-        }
+    int getInt(int columnIndex) throws EmptyColumnValueException, ColumnNotFoundException {
+        return Integer.parseInt(current[columnIndex]);
     }
 
-    int getInt(String columnLabel) throws EmptyColumnValueException {
-        if(isMissing(columnLabel)) {
-            throw new EmptyColumnValueException(columnLabel);
-        }
-        else {
-            return Integer.parseInt(current[columnLabelsToInt.get(columnLabel)]);
-        }
+    int getInt(String columnLabel) throws EmptyColumnValueException, ColumnNotFoundException  {
+        return Integer.parseInt(current[columnLabelsToInt.get(columnLabel)]);
     }
 
-    Long getLong(int columnIndex) throws EmptyColumnValueException {
-        if(isMissing(columnIndex)) {
-            throw new EmptyColumnValueException(columnIndex);
-        }
-        else {
-            return Long.parseLong(current[columnIndex]);
-        }
+    Long getLong(int columnIndex) throws EmptyColumnValueException, ColumnNotFoundException  {
+        return Long.parseLong(get(columnIndex));
     }
 
-    Long getLong(String columnLabel) throws EmptyColumnValueException {
-        if(isMissing(columnLabel)) {
-            throw new EmptyColumnValueException(columnLabel);
-        }
-        else {
-            return Long.parseLong(current[columnLabelsToInt.get(columnLabel)]);
-        }
+    Long getLong(String columnLabel) throws EmptyColumnValueException, ColumnNotFoundException  {
+        return Long.parseLong(get(columnLabelsToInt.get(columnLabel)));
     }
 
-    Double getDouble(int columnIndex) throws EmptyColumnValueException {
-        if(isMissing(columnIndex)) {
-            throw new EmptyColumnValueException(columnIndex);
-        }
-        else {
-            return Double.parseDouble(current[columnIndex]);
-        }
+    Double getDouble(int columnIndex) throws EmptyColumnValueException, ColumnNotFoundException  {
+        return Double.parseDouble(get(columnIndex));
     }
 
-    Double getDouble(String columnLabel) throws EmptyColumnValueException {
-        if(isMissing(columnLabel)) {
-            throw new EmptyColumnValueException(columnLabel);
-        }
-        else {
-            return Double.parseDouble(current[columnLabelsToInt.get(columnLabel)]);
-        }
+    Double getDouble(String columnLabel) throws EmptyColumnValueException, ColumnNotFoundException {
+        return Double.parseDouble(get(columnLabelsToInt.get(columnLabel)));
     }
+/*
+    LocalTime getTime(int columnIndex, String format) {
+        return LocalTime.parse(get(columnIndex), DateTimeFormatter.ofPattern("HH:mm"));
+    }*/
 }
