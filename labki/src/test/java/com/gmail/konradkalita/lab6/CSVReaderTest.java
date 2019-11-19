@@ -38,7 +38,6 @@ class CSVReaderTest
         {
             e.printStackTrace();
         }
-
     }
 
     @Test
@@ -69,7 +68,7 @@ class CSVReaderTest
     }
 
     @Test
-    void should_ThrowEmptyColumnValueException_When_GivenColumnIndexValueIsEmpty()
+    void should_ThrowEmptyColumnValueException_When_ValueAtGivenColumnIndexIsEmpty()
     {
         with_header.setCurrent(new String[]{"", "imię", "nazwisko", "ulica", "nrdomu", "nrmieszkania"}); // zeroth column is set empty
         int columnIndex = 0; // index of empty column
@@ -88,7 +87,7 @@ class CSVReaderTest
     }
 
     @Test
-    void should_ThrowEmptyColumnValueException_When_GivenColumnNameValueIsEmpty()
+    void should_ThrowEmptyColumnValueException_When_ValueAtGivenColumnNameIsEmpty()
     {
         with_header.next(); // read next line
         with_header.setCurrent(new String[]{"", "", "", "", "", ""});
@@ -99,33 +98,29 @@ class CSVReaderTest
     }
 
     @Test
-    void getInt()
+    void should_ConvertValueFromStringToInt_When_ValueAtGivenColumnIndexIsConvertibleToInt()
     {
-    }
-
-
-    @Test
-    void getInt1()
-    {
-    }
-
-    @Test
-    void getLong()
-    {
+        with_header.next(); // read next line
+        try
+        {
+            assertEquals(1, with_header.getInt(0));
+        } catch (EmptyColumnValueException | ColumnNotFoundException e)
+        {
+            e.printStackTrace();
+        }
     }
 
     @Test
-    void getLong1()
+    void should_ConvertValueFromStringToInt_When_ValueAtGivenColumnNameIsConvertibleToInt()
     {
+        with_header.next(); // read next line
+        try
+        {
+            assertEquals(1, with_header.getInt("id"));
+        } catch (EmptyColumnValueException | ColumnNotFoundException e)
+        {
+            e.printStackTrace();
+        }
     }
 
-    @Test
-    void getDouble()
-    {
-    }
-
-    @Test
-    void getDouble1()
-    {
-    }
 }
