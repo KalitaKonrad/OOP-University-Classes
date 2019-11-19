@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report.xsd" name="com.gmail.konradkalita.lab5.lab5Test" time="0.048" tests="6" errors="0" skipped="0" failures="0">
+<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report.xsd" name="com.gmail.konradkalita.lab6.CSVReaderTest" time="0.109" tests="11" errors="0" skipped="0" failures="0">
   <properties>
     <property name="awt.toolkit" value="sun.lwawt.macosx.LWCToolkit"/>
     <property name="java.specification.version" value="12"/>
@@ -56,10 +56,15 @@
     <property name="socksNonProxyHosts" value="local|*.local|169.254/16|*.169.254/16"/>
     <property name="java.class.version" value="56.0"/>
   </properties>
-  <testcase name="diff_Test" classname="com.gmail.konradkalita.lab5.lab5Test" time="0"/>
-  <testcase name="diff_Test2" classname="com.gmail.konradkalita.lab5.lab5Test" time="0.001"/>
-  <testcase name="evaluate_ShouldReturnTrueForArgumentsWhichEvaluateExpressionToZero{double}[1]" classname="com.gmail.konradkalita.lab5.lab5Test" time="0.018"/>
-  <testcase name="evaluate_ShouldReturnTrueForArgumentsWhichEvaluateExpressionToZero{double}[2]" classname="com.gmail.konradkalita.lab5.lab5Test" time="0"/>
-  <testcase name="evaluate_ShouldReturnTrueForArgumentsWhichEvaluateExpressionToZero{double}[3]" classname="com.gmail.konradkalita.lab5.lab5Test" time="0"/>
-  <testcase name="toString_Test" classname="com.gmail.konradkalita.lab5.lab5Test" time="0.001"/>
+  <testcase name="should_ParseHeader_When_GivenFileHasHeader" classname="com.gmail.konradkalita.lab6.CSVReaderTest" time="0.008"/>
+  <testcase name="should_ThrowEmptyColumnValueException_When_ValueAtGivenColumnIndexIsEmpty" classname="com.gmail.konradkalita.lab6.CSVReaderTest" time="0.063"/>
+  <testcase name="should_ReadProperlyFromStringReader_When_GivenStringReader" classname="com.gmail.konradkalita.lab6.CSVReaderTest" time="0.014"/>
+  <testcase name="should_ReturnCorrectValues_When_GivenFileContainingDelimiterInsideValuesInColumn" classname="com.gmail.konradkalita.lab6.CSVReaderTest" time="0.004"/>
+  <testcase name="should_ThrowEmptyColumnValueException_When_ValueAtGivenColumnNameIsEmpty" classname="com.gmail.konradkalita.lab6.CSVReaderTest" time="0.001"/>
+  <testcase name="should_ReadWholeFileProperly_When_GivenFileIsComplete" classname="com.gmail.konradkalita.lab6.CSVReaderTest" time="0.002"/>
+  <testcase name="should_ConvertValueFromStringToInt_When_ValueAtGivenColumnNameIsConvertibleToInt" classname="com.gmail.konradkalita.lab6.CSVReaderTest" time="0.002"/>
+  <testcase name="should_ConvertValueFromStringToInt_When_ValueAtGivenColumnIndexIsConvertibleToInt" classname="com.gmail.konradkalita.lab6.CSVReaderTest" time="0.001"/>
+  <testcase name="should_ThrowColumnNotFoundException_When_GivenColumnNameIsNotPresent" classname="com.gmail.konradkalita.lab6.CSVReaderTest" time="0.002"/>
+  <testcase name="should_ThrowColumnNotFoundException_When_GivenColumnIndexIsTooLarge" classname="com.gmail.konradkalita.lab6.CSVReaderTest" time="0.002"/>
+  <testcase name="should_ThrowColumnNotFoundException_When_GivenColumnIndexIsTooSmall" classname="com.gmail.konradkalita.lab6.CSVReaderTest" time="0.001"/>
 </testsuite>

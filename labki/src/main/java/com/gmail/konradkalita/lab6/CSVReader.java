@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.io.*;
+import java.nio.charset.Charset;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -25,17 +26,44 @@ public class CSVReader
 
     private static final String DEFAULT_TIME_FORMAT = "HH:mm:ss";
     private static final String DEFAULT_DATE_FORMAT = "dd.MM.yyyy";
+    private static final String DEFAULT_CHARSET = "UTF-8";
     private static final String DEFAULT_DATE_AND_TIME_FORMAT = DEFAULT_TIME_FORMAT + " " + DEFAULT_DATE_FORMAT;
     private static final String REGEX_FOR_SPLITTING = "%s(?=([^\"]*\"[^\"]*\")*[^\"]*$)"; //%s at beginning to insert provided delimiter there
 
-    public CSVReader(String filename) throws IOException
+    public CSVReader(String filePath) throws IOException
     {
-        this(filename, ",", false);
+        this(filePath, ",", false, DEFAULT_CHARSET);
     }
 
-    public CSVReader(String filename, String delimiter) throws IOException
+    public CSVReader(String filePath, String delimiter) throws IOException
     {
-        this(filename, delimiter, false);
+        this(filePath, delimiter, false, DEFAULT_CHARSET);
+    }
+
+    /**
+     *
+     * @param filePath - name of the file
+     * @param delimiter - field separator
+     * @param hasHeader - does the file have header
+     */
+
+    public CSVReader(String filePath, String delimiter, boolean hasHeader) throws IOException
+    {
+        this(filePath, delimiter, hasHeader, DEFAULT_CHARSET);
+        this.reader = new BufferedReader(new FileReader(filePath));
+        this.delimiter = createDelimiter(delimiter);
+        this.hasHeader = hasHeader;
+        if(hasHeader) {
+            parseHeader();
+        }
+    }
+
+    public CSVReader(String filePath, String delimiter, boolean hasHeader, String charset)
+            throws FileNotFoundException {
+        this(new BufferedReader(
+                        new InputStreamReader(new FileInputStream(filePath), Charset.forName(charset))),
+                delimiter,
+                hasHeader);
     }
 
     public CSVReader(Reader reader, String delimiter, boolean hasHeader) {
@@ -43,22 +71,6 @@ public class CSVReader
         this.delimiter = createDelimiter(delimiter);
         this.hasHeader = hasHeader;
 
-        if(hasHeader) {
-            parseHeader();
-        }
-    }
-    /**
-     *
-     * @param filename - name of the file
-     * @param delimiter - field separator
-     * @param hasHeader - does the file have header
-     */
-
-    public CSVReader(String filename, String delimiter, boolean hasHeader) throws IOException
-    {
-        this.reader = new BufferedReader(new FileReader(filename));
-        this.delimiter = createDelimiter(delimiter);
-        this.hasHeader = hasHeader;
         if(hasHeader) {
             parseHeader();
         }
