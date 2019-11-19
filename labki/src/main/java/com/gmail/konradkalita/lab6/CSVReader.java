@@ -120,7 +120,7 @@ public class CSVReader
 
     private boolean isMissing(String columnLabel) throws ColumnNotFoundException, EmptyColumnValueException
     {
-        int columnIndex = columnLabelsToInt.get(columnLabel);
+        int columnIndex = columnLabelsToInt.getOrDefault(columnLabel, -1);
         if(columnIndex >= columnLabels.size() || columnIndex < 0) {
             throw new ColumnNotFoundException(columnLabel);
         }

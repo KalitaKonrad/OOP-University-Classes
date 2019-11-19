@@ -44,6 +44,7 @@ class CSVReaderTest
     @Test
     void should_ParseHeader_When_GivenFileHasHeader()
     {
+        // header file is already parsed and stored in 'current'
         assertArrayEquals(new String[]{"id", "imię", "nazwisko", "ulica", "nrdomu", "nrmieszkania"},
                 with_header.getCurrent());
 
@@ -75,6 +76,26 @@ class CSVReaderTest
         assertThatExceptionOfType(EmptyColumnValueException.class)
                 .isThrownBy(() -> with_header.get(columnIndex))
                 .withMessage(String.format("Value on column: %d does not exist", columnIndex));
+    }
+
+    @Test
+    void should_ThrowColumnNotFoundException_When_GivenColumnNameIsNotPresent()
+    {
+        String columnName = "ColumnNonExisting";
+        assertThatExceptionOfType(ColumnNotFoundException.class)
+                .isThrownBy(() -> with_header.get(columnName))
+                .withMessage(String.format("Column: %s does not exist", columnName));
+    }
+
+    @Test
+    void should_ThrowEmptyColumnValueException_When_GivenColumnNameValueIsEmpty()
+    {
+        with_header.next(); // read next line
+        with_header.setCurrent(new String[]{"", "", "", "", "", ""});
+        String columnName = "id"; // First column name (known from header)
+        assertThatExceptionOfType(EmptyColumnValueException.class)
+                .isThrownBy(() -> with_header.get(columnName))
+                .withMessage(String.format("Value on column with name: %s does not exist", columnName));
     }
 
     @Test
