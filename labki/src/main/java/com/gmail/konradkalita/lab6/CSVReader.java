@@ -49,9 +49,9 @@ public class CSVReader
     }
     /**
      *
-     * @param filename - nazwa pliku
-     * @param delimiter - separator pól
-     * @param hasHeader - czy plik ma wiersz nagłówkowy
+     * @param filename - name of the file
+     * @param delimiter - field separator
+     * @param hasHeader - does the file have header
      */
 
     public CSVReader(String filename, String delimiter, boolean hasHeader) throws IOException
