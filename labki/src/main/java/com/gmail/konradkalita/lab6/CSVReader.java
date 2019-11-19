@@ -57,7 +57,7 @@ public class CSVReader
     public CSVReader(String filename, String delimiter, boolean hasHeader) throws IOException
     {
         this.reader = new BufferedReader(new FileReader(filename));
-        this.delimiter = delimiter;
+        this.delimiter = createDelimiter(delimiter);
         this.hasHeader = hasHeader;
         if(hasHeader) {
             parseHeader();
