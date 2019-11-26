@@ -119,27 +119,13 @@ public class CSVReader
         return this.recordLength;
     }
 
-    private boolean isMissing(int columnIndex) throws ColumnNotFoundException, EmptyColumnValueException
-    {
-        if(columnIndex >= columnLabels.size() || columnIndex < 0) {
-            throw new ColumnNotFoundException(columnIndex);
-        }
-        if(current[columnIndex].equals("")) {
-            throw new EmptyColumnValueException(columnIndex);
-        }
-        return current[columnIndex].isEmpty();
+    private boolean isMissing(int columnIndex) {
+        return columnIndex < 0 || columnIndex >= current.length || current[columnIndex].isEmpty();
     }
 
     private boolean isMissing(String columnLabel) throws ColumnNotFoundException, EmptyColumnValueException
     {
-        int columnIndex = columnLabelsToInt.getOrDefault(columnLabel, -1);
-        if(columnIndex >= columnLabels.size() || columnIndex < 0) {
-            throw new ColumnNotFoundException(columnLabel);
-        }
-        if(current[columnIndex].equals("")) {
-            throw new EmptyColumnValueException(columnLabel);
-        }
-        return current[columnIndex].isEmpty();
+        return isMissing(columnLabelsToInt.get(columnLabel));
     }
 
     public String get(int columnIndex) throws ColumnNotFoundException, EmptyColumnValueException {
@@ -150,28 +136,64 @@ public class CSVReader
         return isMissing(columnLabel) ? "" : current[columnLabelsToInt.get(columnLabel)];
     }
 
+    public String get(int index, String defaultValue)
+            throws ColumnNotFoundException, EmptyColumnValueException {
+        return isMissing(index) ? defaultValue : get(index);
+    }
+
     public int getInt(int columnIndex) throws EmptyColumnValueException, ColumnNotFoundException {
         return Integer.parseInt(get(columnIndex));
+    }
+
+    public int getInt(int index, int defaultValue)
+            throws EmptyColumnValueException, ColumnNotFoundException {
+        return isMissing(index) ? defaultValue : getInt(index);
     }
 
     public int getInt(String columnLabel) throws EmptyColumnValueException, ColumnNotFoundException  {
         return Integer.parseInt(get(columnLabelsToInt.get(columnLabel)));
     }
 
+    public int getInt(String column, int defaultValue)
+            throws ColumnNotFoundException, EmptyColumnValueException {
+        return isMissing(column) ? defaultValue : getInt(column);
+    }
+
     public Long getLong(int columnIndex) throws EmptyColumnValueException, ColumnNotFoundException  {
         return Long.parseLong(get(columnIndex));
+    }
+
+    public long getLong(int index, long defaultValue)
+            throws EmptyColumnValueException,
+            ColumnNotFoundException {
+        return isMissing(index) ? defaultValue : getLong(index);
     }
 
     public Long getLong(String columnLabel) throws EmptyColumnValueException, ColumnNotFoundException  {
         return Long.parseLong(get(columnLabelsToInt.get(columnLabel)));
     }
 
+    public long getLong(String column, long defaultValue)
+            throws ColumnNotFoundException, EmptyColumnValueException {
+        return isMissing(column) ? defaultValue : getLong(column);
+    }
+
     public Double getDouble(int columnIndex) throws EmptyColumnValueException, ColumnNotFoundException  {
         return Double.parseDouble(get(columnIndex));
     }
 
-   public Double getDouble(String columnLabel) throws EmptyColumnValueException, ColumnNotFoundException {
+    public double getDouble(int index, double defaultValue)
+            throws EmptyColumnValueException, ColumnNotFoundException {
+        return isMissing(index) ? defaultValue : getDouble(index);
+    }
+
+    public Double getDouble(String columnLabel) throws EmptyColumnValueException, ColumnNotFoundException {
         return Double.parseDouble(get(columnLabelsToInt.get(columnLabel)));
+    }
+
+    public double getDouble(String column, double defaultValue)
+            throws ColumnNotFoundException, EmptyColumnValueException {
+        return isMissing(column) ? defaultValue : getDouble(column);
     }
 
     public LocalTime getTime(int index) throws ColumnNotFoundException, EmptyColumnValueException {
