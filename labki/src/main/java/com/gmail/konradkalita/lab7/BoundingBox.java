@@ -35,7 +35,7 @@ public class BoundingBox {
     }
 
     boolean intersects(BoundingBox box) {
-        return (xMin <= box.xMax) && (xMax >= box.xMin) && (yMin <= box.yMax) && (yMax >= box.yMin);
+        return (!isEmpty() && !box.isEmpty() ) && (xMin <= box.xMax) && (xMax >= box.xMin) && (yMin <= box.yMax) && (yMax >= box.yMin);
     }
 
     double getWidth() {
@@ -78,5 +78,18 @@ public class BoundingBox {
         return container;
     }
 
+    double distanceTo(BoundingBox bbx) throws GetCenterFromEmpyBoxException {
+        if (isEmpty() || bbx.isEmpty()) {
+            throw new IllegalStateException("Can't compute distance " +
+                    "between bounding boxes that" +
+                    "are empty");
+        }
+        return Haversine.haversine(
+                Math.min(getCenterY(), bbx.getCenterY()),
+                Math.min(getCenterX(), bbx.getCenterX()),
+                Math.max(getCenterY(), bbx.getCenterY()),
+                Math.max(getCenterX(), bbx.getCenterX())
+                );
+    }
 
 }
