@@ -6,7 +6,6 @@ import com.gmail.konradkalita.lab6.EmptyColumnValueException;
 
 import java.io.IOException;
 import java.io.PrintStream;
-import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -35,10 +34,10 @@ public class AdminUnitList {
             unit.density = reader.getDouble("density", -1);
 
             BoundingBox bbox = new BoundingBox();
-            bbox.xmin = reader.getDouble("x1", 0);
-            bbox.ymin = reader.getDouble("y1", 0);
-            bbox.xmax = reader.getDouble("x3", 0);
-            bbox.ymax = reader.getDouble("y2", 0);
+            bbox.xMin = reader.getDouble("x1", Double.NaN);
+            bbox.yMin = reader.getDouble("y1", Double.NaN);
+            bbox.xMax = reader.getDouble("x3", Double.NaN);
+            bbox.yMax = reader.getDouble("y3", Double.NaN);
             unit.bbox = bbox;
 
             units.add(unit);

@@ -5,30 +5,42 @@ import lombok.ToString;
 
 @ToString
 public class BoundingBox {
-    double xmin;
-    double ymin;
-    double xmax;
-    double ymax;
-    boolean isEmpty = false;
+    double xMin;
+    double yMin;
+    double xMax;
+    double yMax;
 
     void addPoint(double x, double y) {
 
     }
 
     boolean contains(double x, double y){
-        return x >= xmin && x <= xmax && y >= ymin && y <= ymax;
+        return x >= xMin && x <= xMax && y >= yMin && y <= yMax;
     }
 
     boolean contains(BoundingBox box) {
-        return contains(box.xmin, box.ymin) && contains(box.xmax, box.ymax);
+        return contains(box.xMin, box.yMin) && contains(box.xMax, box.yMax);
     }
 
     boolean intersects(BoundingBox box) {
-        return contains(box.xmin, box.ymin)
-                || contains(box.xmax, box.ymax)
-                || contains(box.xmin, box.ymax)
-                || contains(box.xmax, box.ymin);
+        return (xMin <= box.xMax) && (xMax >= box.xMin) && (yMin <= box.yMax) && (yMax >= box.yMin);
     }
 
+    double getWidth() {
+        return Math.abs(xMax - xMin);
+    }
 
+    double getHeight() {
+        return Math.abs(yMax - yMin);
+    }
+    boolean isEmpty() {
+        return Double.isNaN(xMin) && Double.isNaN(xMax) && Double.isNaN(yMin) && Double.isNaN(yMax);
+    }
+
+    double getCenterX() throws GetCenterFromEmpyBoxException {
+        if(isEmpty()) {
+            throw new GetCenterFromEmpyBoxException();
+        }
+        return Math.abs((xMax - xMin) / 2);
+    }
 }
