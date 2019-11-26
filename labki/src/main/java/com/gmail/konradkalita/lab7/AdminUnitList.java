@@ -25,20 +25,7 @@ public class AdminUnitList {
         reader = new CSVReader(filePath, ",", true);
 
         while(reader.next()) {
-            AdminUnit unit = new AdminUnit();
-
-            unit.name = reader.get("name");
-            unit.adminLevel = reader.getInt("admin_level", 0);
-            unit.population = reader.getInt("population", -1);
-            unit.area = reader.getDouble("area", 0);
-            unit.density = reader.getDouble("density", -1);
-
-            BoundingBox bbox = new BoundingBox();
-            bbox.xMin = reader.getDouble("x1", Double.NaN);
-            bbox.yMin = reader.getDouble("y1", Double.NaN);
-            bbox.xMax = reader.getDouble("x3", Double.NaN);
-            bbox.yMax = reader.getDouble("y3", Double.NaN);
-            unit.bbox = bbox;
+            AdminUnit unit = readUnit();
 
             units.add(unit);
             idToAdminUnit.put(reader.getLong("id"), unit);
@@ -99,5 +86,65 @@ public class AdminUnitList {
                         unit.parent.children = parentIdToChildren.getOrDefault(parentId, new ArrayList<>());
                     }
                 });
+    }
+
+    private AdminUnit readUnit() throws EmptyColumnValueException, ColumnNotFoundException {
+        AdminUnit unit = new AdminUnit();
+
+        unit.name = reader.get("name");
+        unit.adminLevel = reader.getInt("admin_level", 0);
+        unit.population = reader.getInt("population", -1);
+        unit.area = reader.getDouble("area", 0);
+        unit.density = reader.getDouble("density", -1);
+
+        BoundingBox bbox = new BoundingBox();
+        bbox.xMin = reader.getDouble("x1", Double.NaN);
+        bbox.yMin = reader.getDouble("y1", Double.NaN);
+        bbox.xMax = reader.getDouble("x3", Double.NaN);
+        bbox.yMax = reader.getDouble("y3", Double.NaN);
+        unit.bbox = bbox;
+
+        return unit;
+    }
+
+    AdminUnitList getNeighbours(AdminUnit givenUnit, double maxDistance) {
+        int adminLevel = givenUnit.adminLevel;
+        boolean isCity = adminLevel == 8; // condition for unit being city
+
+        return isCity ?
+                getNeighboursForCity(givenUnit, maxDistance) :
+                getNeighboursForOtherThanCityUnit(givenUnit);
+    }
+
+    private AdminUnitList getNeighboursForCity(AdminUnit givenUnit, double maxDistance) {
+        AdminUnitList result = new AdminUnitList();
+        int adminLevel = givenUnit.adminLevel;
+        String name = givenUnit.name;
+
+        result.units = units.stream()
+                .filter(unit -> (unit.adminLevel == adminLevel && !unit.name.equals(name)))
+                .filter(unit -> {
+                    try {
+                        return (unit.bbox.distanceTo(givenUnit.bbox) <= maxDistance);
+                    } catch (GetCenterFromEmpyBoxException e) {
+                        return false; // if they cannot be compared then simply reject unit
+                    }
+                })
+                .collect(Collectors.toList());
+
+        return result;
+    }
+
+    private AdminUnitList getNeighboursForOtherThanCityUnit(AdminUnit givenUnit) {
+        AdminUnitList result = new AdminUnitList();
+        int adminLevel = givenUnit.adminLevel;
+        String name = givenUnit.name;
+
+        result.units = units.stream()
+                .filter(unit -> (unit.adminLevel == adminLevel && !unit.name.equals(name)))
+                .filter(unit -> unit.bbox.intersects(givenUnit.bbox))
+                .collect(Collectors.toList());
+
+        return result;
     }
 }

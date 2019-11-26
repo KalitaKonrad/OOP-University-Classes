@@ -1,7 +1,5 @@
 package com.gmail.konradkalita.lab7;
 
-import com.gmail.konradkalita.lab2_and_3.Matrix;
-import jdk.internal.util.xml.impl.Pair;
 import lombok.ToString;
 
 @ToString
