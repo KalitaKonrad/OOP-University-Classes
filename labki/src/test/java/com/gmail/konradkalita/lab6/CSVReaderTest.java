@@ -46,56 +46,24 @@ class CSVReaderTest {
     }
 
     @Test
-    void should_ThrowColumnNotFoundException_When_GivenColumnIndexIsTooLarge() {
-        int columnIndex = 100; // There are only columns from zero to fifth (including)
-        assertThatExceptionOfType(ColumnNotFoundException.class)
-                .isThrownBy(() -> with_header.get(columnIndex))
-                .withMessage(
-                        String.format("Column with number: %d does not exist",
-                                columnIndex));
+    void should_ReturnEmptyString_When_GivenColumnIndexIsTooLarge() {
+        int columnIndex = 100;
+        assertEquals("", with_header.get(columnIndex));
     }
 
     @Test
-    void should_ThrowColumnNotFoundException_When_GivenColumnIndexIsTooSmall() {
-        int columnIndex = -1; // There are only columns from zero to fifth (including)
-        assertThatExceptionOfType(ColumnNotFoundException.class)
-                .isThrownBy(() -> with_header.get(columnIndex))
-                .withMessage(
-                        String.format("Column with number: %d does not exist",
-                                columnIndex));
-    }
-
-    @Test
-    void should_ThrowEmptyColumnValueException_When_ValueAtGivenColumnIndexIsEmpty() {
+    void should_ReturnEmptyString_When_ValueAtGivenColumnIndexIsEmpty() {
         with_header.setCurrent(
                 new String[]{"", "imię", "nazwisko", "ulica", "nrdomu",
                         "nrmieszkania"}); // zeroth column is set empty
         int columnIndex = 0; // index of empty column
-        assertThatExceptionOfType(EmptyColumnValueException.class)
-                .isThrownBy(() -> with_header.get(columnIndex))
-                .withMessage(String.format("Value on column: %d does not exist",
-                        columnIndex));
+        assertEquals("", with_header.get(columnIndex));
     }
 
     @Test
-    void should_ThrowColumnNotFoundException_When_GivenColumnNameIsNotPresent() {
+    void should_ReturnEmptyString_When_GivenColumnNameIsNotPresent() {
         String columnName = "ColumnNonExisting";
-        assertThatExceptionOfType(ColumnNotFoundException.class)
-                .isThrownBy(() -> with_header.get(columnName))
-                .withMessage(
-                        String.format("Column: %s does not exist", columnName));
-    }
-
-    @Test
-    void should_ThrowEmptyColumnValueException_When_ValueAtGivenColumnNameIsEmpty() {
-        with_header.next(); // read next line
-        with_header.setCurrent(new String[]{"", "", "", "", "", ""});
-        String columnName = "id"; // First column name (known from header)
-        assertThatExceptionOfType(EmptyColumnValueException.class)
-                .isThrownBy(() -> with_header.get(columnName))
-                .withMessage(String.format(
-                        "Value on column with name: %s does not exist",
-                        columnName));
+        assertEquals("", with_header.get(columnName));
     }
 
     @Test

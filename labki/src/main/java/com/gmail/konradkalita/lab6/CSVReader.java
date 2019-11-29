@@ -123,76 +123,89 @@ public class CSVReader
         return columnIndex < 0 || columnIndex >= current.length || current[columnIndex].isEmpty();
     }
 
-    private boolean isMissing(String columnLabel) throws ColumnNotFoundException, EmptyColumnValueException
+    private boolean isMissing(String columnLabel)
     {
-        return isMissing(columnLabelsToInt.get(columnLabel));
+        return isMissing(columnLabelsToInt.getOrDefault(columnLabel, -1));
     }
 
-    public String get(int columnIndex) throws ColumnNotFoundException, EmptyColumnValueException {
+    public String get(int columnIndex) {
         return isMissing(columnIndex) ? "" : current[columnIndex];
     }
 
-    public String get(String columnLabel) throws ColumnNotFoundException, EmptyColumnValueException {
+    public String get(String columnLabel) {
         return isMissing(columnLabel) ? "" : current[columnLabelsToInt.get(columnLabel)];
     }
 
-    public String get(int index, String defaultValue)
-            throws ColumnNotFoundException, EmptyColumnValueException {
+    public String get(int index, String defaultValue) {
         return isMissing(index) ? defaultValue : get(index);
     }
 
-    public int getInt(int columnIndex) throws EmptyColumnValueException, ColumnNotFoundException {
+    public int getInt(int columnIndex) {
         return Integer.parseInt(get(columnIndex));
     }
 
-    public int getInt(int index, int defaultValue)
-            throws EmptyColumnValueException, ColumnNotFoundException {
+    public int getInt(int index, int defaultValue) {
         return isMissing(index) ? defaultValue : getInt(index);
     }
 
-    public int getInt(String columnLabel) throws EmptyColumnValueException, ColumnNotFoundException  {
+    public int getInt(String columnLabel) throws ColumnNotFoundException {
+        if(!columnLabelsToInt.containsKey(columnLabel)) {
+            throw new ColumnNotFoundException(columnLabel);
+        }
         return Integer.parseInt(get(columnLabelsToInt.get(columnLabel)));
     }
 
     public int getInt(String column, int defaultValue)
-            throws ColumnNotFoundException, EmptyColumnValueException {
+            throws ColumnNotFoundException {
         return isMissing(column) ? defaultValue : getInt(column);
     }
 
-    public Long getLong(int columnIndex) throws EmptyColumnValueException, ColumnNotFoundException  {
+    public Long getLong(int columnIndex) throws ColumnNotFoundException  {
+        if (isMissing(columnIndex)) {
+            throw new ColumnNotFoundException(columnIndex);
+        }
         return Long.parseLong(get(columnIndex));
     }
 
     public long getLong(int index, long defaultValue)
-            throws EmptyColumnValueException,
-            ColumnNotFoundException {
+            throws ColumnNotFoundException {
         return isMissing(index) ? defaultValue : getLong(index);
     }
 
-    public Long getLong(String columnLabel) throws EmptyColumnValueException, ColumnNotFoundException  {
+    public Long getLong(String columnLabel) throws ColumnNotFoundException  {
+        if(isMissing(columnLabel)) {
+            throw new ColumnNotFoundException(columnLabel);
+        }
         return Long.parseLong(get(columnLabelsToInt.get(columnLabel)));
     }
 
     public long getLong(String column, long defaultValue)
-            throws ColumnNotFoundException, EmptyColumnValueException {
+            throws ColumnNotFoundException {
         return isMissing(column) ? defaultValue : getLong(column);
     }
 
-    public Double getDouble(int columnIndex) throws EmptyColumnValueException, ColumnNotFoundException  {
+    public Double getDouble(int columnIndex) throws ColumnNotFoundException  {
+        if(isMissing(columnIndex)) {
+            throw new ColumnNotFoundException(columnIndex);
+        }
         return Double.parseDouble(get(columnIndex));
     }
 
     public double getDouble(int index, double defaultValue)
-            throws EmptyColumnValueException, ColumnNotFoundException {
+            throws ColumnNotFoundException {
+
         return isMissing(index) ? defaultValue : getDouble(index);
     }
 
-    public Double getDouble(String columnLabel) throws EmptyColumnValueException, ColumnNotFoundException {
+    public Double getDouble(String columnLabel) throws ColumnNotFoundException {
+        if(isMissing(columnLabel)) {
+            throw new ColumnNotFoundException(columnLabel);
+        }
         return Double.parseDouble(get(columnLabelsToInt.get(columnLabel)));
     }
 
     public double getDouble(String column, double defaultValue)
-            throws ColumnNotFoundException, EmptyColumnValueException {
+            throws ColumnNotFoundException {
         return isMissing(column) ? defaultValue : getDouble(column);
     }
 
