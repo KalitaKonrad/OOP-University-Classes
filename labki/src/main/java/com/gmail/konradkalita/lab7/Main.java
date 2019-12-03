@@ -18,12 +18,8 @@ public class Main {
 
         try {
             list.read(filePath);
-            System.out.println(list.get(4450).toString());
-            AdminUnitList n = list.getNeighbours(list.get(4450), 10.0);
-            n.units.forEach(System.out::println);
-//            list.units.stream()
-//                    .filter(unit -> unit.adminLevel == 4)
-//                    .forEach(unit -> System.out);
+
+            list.filter(unit -> unit.name.startsWith("K"));
 
         } catch (IOException | EmptyColumnValueException | ColumnNotFoundException e) {
             e.printStackTrace();

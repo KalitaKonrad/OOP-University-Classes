@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report.xsd" name="com.gmail.konradkalita.lab4.PhotoTest" time="0.001" tests="2" errors="0" skipped="0" failures="0">
+<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report.xsd" name="com.gmail.konradkalita.lab7.AdminUnitListTest" time="1.734" tests="3" errors="0" skipped="0" failures="0">
   <properties>
     <property name="awt.toolkit" value="sun.lwawt.macosx.LWCToolkit"/>
     <property name="java.specification.version" value="12"/>
@@ -56,6 +56,7 @@
     <property name="socksNonProxyHosts" value="local|*.local|169.254/16|*.169.254/16"/>
     <property name="java.class.version" value="56.0"/>
   </properties>
-  <testcase name="Should_CreateValidPhoto_When_ValidImageUrlIsProvided" classname="com.gmail.konradkalita.lab4.PhotoTest" time="0"/>
-  <testcase name="Should_ThrowIllegalArgumentException_When_PassInNull" classname="com.gmail.konradkalita.lab4.PhotoTest" time="0.001"/>
+  <testcase name="getNeighbours" classname="com.gmail.konradkalita.lab7.AdminUnitListTest" time="0.723"/>
+  <testcase name="list" classname="com.gmail.konradkalita.lab7.AdminUnitListTest" time="0.537"/>
+  <testcase name="selectByName" classname="com.gmail.konradkalita.lab7.AdminUnitListTest" time="0.47"/>
 </testsuite>

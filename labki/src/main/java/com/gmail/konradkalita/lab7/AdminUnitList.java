@@ -6,15 +6,14 @@ import com.gmail.konradkalita.lab6.EmptyColumnValueException;
 
 import java.io.IOException;
 import java.io.PrintStream;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
+import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 public class AdminUnitList {
     List<AdminUnit> units = new ArrayList<>();
-    Map<Long, AdminUnit> idToAdminUnit= new HashMap<>();
+    AdminUnit root = new AdminUnit();
+    Map<Long, AdminUnit> idToAdminUnit = new HashMap<>();
     Map<AdminUnit, Long> adminUnitToParentId = new HashMap<>();
     Map<Long, List<AdminUnit>> parentIdToChildren = new HashMap<>();
 
@@ -24,34 +23,17 @@ public class AdminUnitList {
             throws IOException, EmptyColumnValueException, ColumnNotFoundException {
         reader = new CSVReader(filePath, ",", true);
 
-        while(reader.next()) {
-            AdminUnit unit = readUnit();
 
-            units.add(unit);
-            idToAdminUnit.put(reader.getLong("id"), unit);
-            long parentId = reader.getLong("parent", -1);
-            adminUnitToParentId.put(unit, parentId);
-
-            if (parentId != -1) {
-                if (parentIdToChildren.containsKey(parentId)) {
-                    parentIdToChildren.get(parentId).add(unit);
-                }
-                else {
-                    List<AdminUnit> children = new ArrayList<>();
-                    children.add(unit);
-                    parentIdToChildren.put(parentId, children);
-                }
-            }
-        }
-
+        readAllAdminUnits();
         setChildrenHierarchy();
+        fixMissingValues();
     }
 
     void list(PrintStream out) {
         units.forEach(out::println);
     }
 
-    void list(PrintStream out,int offset, int limit ) {
+    void list(PrintStream out, int offset, int limit) {
         units.stream()
                 .skip(offset)
                 .limit(limit)
@@ -62,9 +44,9 @@ public class AdminUnitList {
         AdminUnitList ret = new AdminUnitList();
         ret.units =
                 units.stream()
-                    .filter(unit -> regex ? unit.name.matches(pattern) :
-                            unit.name.contains(pattern))
-                    .collect(Collectors.toList());
+                        .filter(unit -> regex ? unit.name.matches(pattern) :
+                                unit.name.contains(pattern))
+                        .collect(Collectors.toList());
         return ret;
     }
 
@@ -76,6 +58,28 @@ public class AdminUnitList {
         units.forEach(AdminUnit::fixMissingValues);
     }
 
+    private void readAllAdminUnits() throws ColumnNotFoundException, EmptyColumnValueException {
+        idToAdminUnit.put(-1L, root); // adding root
+        while (reader.next()) { // reading all units from file and setting their hierarchy
+            AdminUnit unit = readUnit();
+
+            units.add(unit);
+            idToAdminUnit.put(reader.getLong("id"), unit);
+            long parentId = reader.getLong("parent", -1);
+            adminUnitToParentId.put(unit, parentId);
+
+            if (parentId != -1) {
+                if (parentIdToChildren.containsKey(parentId)) {
+                    parentIdToChildren.get(parentId).add(unit);
+                } else {
+                    List<AdminUnit> children = new ArrayList<>();
+                    children.add(unit);
+                    parentIdToChildren.put(parentId, children);
+                }
+            }
+        }
+    }
+
     private void setChildrenHierarchy() {
         units.forEach(
                 unit -> {
@@ -83,7 +87,8 @@ public class AdminUnitList {
                     unit.parent = idToAdminUnit.getOrDefault(parentId, null);
 
                     if (unit.parent != null) {
-                        unit.parent.children = parentIdToChildren.getOrDefault(parentId, new ArrayList<>());
+                        unit.parent.children = parentIdToChildren
+                                .getOrDefault(parentId, new ArrayList<>());
                     }
                 });
     }
@@ -106,7 +111,7 @@ public class AdminUnitList {
 
         return unit;
     }
-
+    /*
     AdminUnitList getNeighbours(AdminUnit givenUnit, double maxDistance) {
         int adminLevel = givenUnit.adminLevel;
         boolean isCity = adminLevel == 8; // condition for unit being city
@@ -147,4 +152,139 @@ public class AdminUnitList {
 
         return result;
     }
+    */
+
+    /* RTree implementation of gettingNeighbours*/
+    AdminUnitList getNeighbours(AdminUnit unit, double maxDistance) {
+        AdminUnit current;
+        List<AdminUnit> potentialNeighbours = new ArrayList<>();
+
+        potentialNeighbours.add(root);
+
+        while (true) {
+            current = potentialNeighbours.remove(0);
+            if (current.adminLevel < unit.adminLevel) {
+                potentialNeighbours.addAll(current.children);
+            }
+
+            if (potentialNeighbours.isEmpty()) {
+                break;
+            }
+
+            if (potentialNeighbours.get(0).adminLevel >= unit.adminLevel) {
+                break;
+            }
+        }
+
+        return buildSubUnitList(filterNeighbours(potentialNeighbours, unit, maxDistance));
+    }
+
+    AdminUnitList getNeighboursLinear(AdminUnit needle, double maxDistance) {
+        return buildSubUnitList(filterNeighbours(units, needle, maxDistance));
+    }
+
+    private List<AdminUnit> filterNeighbours(List<AdminUnit> list, AdminUnit needle, double maxDist) {
+        return list.stream()
+                .filter(
+                        unit -> {
+                            try {
+                                return !unit.equals(needle)
+                                        && ((unit.adminLevel >= 8 && unit.bbox.distanceTo(needle.bbox) < maxDist)
+                                        || (unit.adminLevel < 8 && unit.bbox.intersects(needle.bbox)));
+                            } catch (GetCenterFromEmpyBoxException e) {
+                                e.printStackTrace();
+                            }
+                            return false; // if exception is thrown, return false
+                        })
+                .collect(Collectors.toList());
+    }
+
+    /* function for copying units */
+    private AdminUnitList buildSubUnitList(List<AdminUnit> list) {
+        AdminUnitList unitList = new AdminUnitList();
+
+        unitList.units = list;
+        unitList.idToAdminUnit =
+                idToAdminUnit.entrySet().stream()
+                        .filter(x -> list.contains(x.getValue()))
+                        .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
+
+        unitList.adminUnitToParentId =
+                adminUnitToParentId.entrySet().stream()
+                        .filter(x -> list.contains(x.getKey()))
+                        .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
+
+        unitList.adminUnitToParentId.put(root, -1L);
+        unitList.idToAdminUnit.put(-1L, root);
+        unitList.setChildrenHierarchy();
+
+        return unitList;
+    }
+
+    /* lab 9  Sorting and filtering */
+
+    private AdminUnitList copy() {
+        return buildSubUnitList(units);
+    }
+
+    AdminUnitList sortInplaceByName() {
+        units.sort(new AdminUnitListComparator());
+        return this;
+    }
+
+    AdminUnitList sortInplaceByArea() {
+        units.sort(new Comparator<AdminUnit>() {
+            @Override
+            public int compare(AdminUnit o1, AdminUnit o2) {
+                return Double.compare(o1.area, o2.area);
+            }
+        });
+        return this;
+    }
+
+    AdminUnitList sortInplaceByPopulation() {
+        units.sort((unit1, unit2) -> {
+            return Double.compare(unit1.population, unit2.population);
+        });
+        return this;
+    }
+
+    AdminUnitList sortInplace(Comparator<AdminUnit> cmp){
+        units.sort(cmp);
+        return this;
+    }
+
+    AdminUnitList sort(Comparator<AdminUnit> cmp){
+        AdminUnitList copyList = buildSubUnitList(units);
+        copyList.sortInplace(cmp);
+        return copyList;
+    }
+
+    AdminUnitList filter(Predicate<AdminUnit> pred) {
+        AdminUnitList copyList = buildSubUnitList(units);
+        copyList.units = copyList.units.stream()
+                .filter(pred)
+                .collect(Collectors.toList());
+        return copyList;
+    }
+
+    AdminUnitList filter(Predicate<AdminUnit> pred, int limit){
+        AdminUnitList copyList = buildSubUnitList(units);
+        copyList.units = copyList.units.stream()
+                .filter(pred)
+                .limit(limit)
+                .collect(Collectors.toList());
+        return copyList;
+    }
+
+    AdminUnitList filter(Predicate<AdminUnit> pred, int offset, int limit){
+        AdminUnitList copyList = buildSubUnitList(units);
+        copyList.units = copyList.units.stream()
+                .filter(pred)
+                .skip(offset)
+                .limit(limit)
+                .collect(Collectors.toList());
+        return copyList;
+    }
+
 }
