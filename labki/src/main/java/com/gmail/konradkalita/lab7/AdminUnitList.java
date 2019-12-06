@@ -23,7 +23,6 @@ public class AdminUnitList {
             throws IOException, EmptyColumnValueException, ColumnNotFoundException {
         reader = new CSVReader(filePath, ",", true);
 
-
         readAllAdminUnits();
         setChildrenHierarchy();
         fixMissingValues();
@@ -58,7 +57,7 @@ public class AdminUnitList {
         units.forEach(AdminUnit::fixMissingValues);
     }
 
-    private void readAllAdminUnits() throws ColumnNotFoundException, EmptyColumnValueException {
+    private void readAllAdminUnits() throws ColumnNotFoundException {
         idToAdminUnit.put(-1L, root); // adding root
         while (reader.next()) { // reading all units from file and setting their hierarchy
             AdminUnit unit = readUnit();
@@ -93,7 +92,7 @@ public class AdminUnitList {
                 });
     }
 
-    private AdminUnit readUnit() throws EmptyColumnValueException, ColumnNotFoundException {
+    private AdminUnit readUnit() throws ColumnNotFoundException {
         AdminUnit unit = new AdminUnit();
 
         unit.name = reader.get("name");
@@ -111,6 +110,7 @@ public class AdminUnitList {
 
         return unit;
     }
+
     /*
     AdminUnitList getNeighbours(AdminUnit givenUnit, double maxDistance) {
         int adminLevel = givenUnit.adminLevel;
@@ -183,14 +183,14 @@ public class AdminUnitList {
         return buildSubUnitList(filterNeighbours(units, needle, maxDistance));
     }
 
-    private List<AdminUnit> filterNeighbours(List<AdminUnit> list, AdminUnit needle, double maxDist) {
+    private List<AdminUnit> filterNeighbours(List<AdminUnit> list, AdminUnit unitForNeighbours, double maxDist) {
         return list.stream()
                 .filter(
                         unit -> {
                             try {
-                                return !unit.equals(needle)
-                                        && ((unit.adminLevel >= 8 && unit.bbox.distanceTo(needle.bbox) < maxDist)
-                                        || (unit.adminLevel < 8 && unit.bbox.intersects(needle.bbox)));
+                                return !unit.equals(unitForNeighbours)
+                                        && ((unit.adminLevel >= 8 && unit.bbox.distanceTo(unitForNeighbours.bbox) < maxDist)
+                                        || (unit.adminLevel < 8 && unit.bbox.intersects(unitForNeighbours.bbox)));
                             } catch (GetCenterFromEmpyBoxException e) {
                                 e.printStackTrace();
                             }
@@ -243,9 +243,7 @@ public class AdminUnitList {
     }
 
     AdminUnitList sortInplaceByPopulation() {
-        units.sort((unit1, unit2) -> {
-            return Double.compare(unit1.population, unit2.population);
-        });
+        units.sort(Comparator.comparingDouble(unit -> unit.population));
         return this;
     }
 
@@ -261,30 +259,27 @@ public class AdminUnitList {
     }
 
     AdminUnitList filter(Predicate<AdminUnit> pred) {
-        AdminUnitList copyList = buildSubUnitList(units);
-        copyList.units = copyList.units.stream()
+        List<AdminUnit> copyList = units.stream()
                 .filter(pred)
                 .collect(Collectors.toList());
-        return copyList;
+        return buildSubUnitList(copyList);
     }
 
     AdminUnitList filter(Predicate<AdminUnit> pred, int limit){
-        AdminUnitList copyList = buildSubUnitList(units);
-        copyList.units = copyList.units.stream()
+        List<AdminUnit> copyList = units.stream()
                 .filter(pred)
                 .limit(limit)
                 .collect(Collectors.toList());
-        return copyList;
+        return buildSubUnitList(copyList);
     }
 
     AdminUnitList filter(Predicate<AdminUnit> pred, int offset, int limit){
-        AdminUnitList copyList = buildSubUnitList(units);
-        copyList.units = copyList.units.stream()
+        List<AdminUnit> copyList = units.stream()
                 .filter(pred)
                 .skip(offset)
                 .limit(limit)
                 .collect(Collectors.toList());
-        return copyList;
+        return buildSubUnitList(copyList);
     }
 
 }
