@@ -200,7 +200,7 @@ public class AdminUnitList {
     }
 
     /* function for copying units */
-    private AdminUnitList buildSubUnitList(List<AdminUnit> list) {
+    AdminUnitList buildSubUnitList(List<AdminUnit> list) {
         AdminUnitList unitList = new AdminUnitList();
 
         unitList.units = list;
