@@ -7,7 +7,7 @@ import java.util.stream.Collectors;
 
 public class AdminUnitQuery {
     AdminUnitList src;
-    Predicate<AdminUnit> pred = a->true;
+    Predicate<AdminUnit> pred = a -> true;
     Comparator<AdminUnit> cmp;
     int limit = Integer.MAX_VALUE;
     int offset = 0;
@@ -29,7 +29,7 @@ public class AdminUnitQuery {
     }
 
     AdminUnitQuery or(Predicate<AdminUnit> pred){
-        this.pred = this.pred.and(pred);
+        this.pred = this.pred.or(pred);
         return this;
     }
 
@@ -51,8 +51,8 @@ public class AdminUnitQuery {
     AdminUnitList execute(){
         List<AdminUnit> queryResult = src.units.stream()
                 .skip(offset)
-                .filter(pred)
                 .limit(limit)
+                .filter(pred)
                 .sorted(cmp)
                 .collect(Collectors.toList());
         return src.buildSubUnitList(queryResult);

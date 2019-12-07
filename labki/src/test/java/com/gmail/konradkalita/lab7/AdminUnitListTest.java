@@ -24,17 +24,9 @@ class AdminUnitListTest {
     }
 
     @Test
-    void list() {
-    }
-
-    @Test
     void selectByName() {
         String expected = "województwo podkarpackie";
         assertEquals(expected, list.selectByName("województwo podkarpackie", true)
         .units.get(0).getName());
-    }
-
-    @Test
-    void getNeighbours() {
     }
 }

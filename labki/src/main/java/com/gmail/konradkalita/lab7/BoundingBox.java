@@ -47,16 +47,16 @@ public class BoundingBox {
         return Double.isNaN(xMin) && Double.isNaN(xMax) && Double.isNaN(yMin) && Double.isNaN(yMax);
     }
 
-    double getCenterX() throws GetCenterFromEmpyBoxException {
+    double getCenterX() {
         if(isEmpty()) {
-            throw new GetCenterFromEmpyBoxException();
+            throw new IllegalStateException("Bounding box empty!");
         }
         return (xMax + xMin) / 2;
     }
 
-    double getCenterY() throws GetCenterFromEmpyBoxException {
+    double getCenterY() {
         if(isEmpty()) {
-            throw new GetCenterFromEmpyBoxException();
+            throw new IllegalStateException("Bounding box empty!");
         }
         return (yMax + yMin) / 2;
     }
@@ -76,11 +76,12 @@ public class BoundingBox {
         return container;
     }
 
-    double distanceTo(BoundingBox bbx) throws GetCenterFromEmpyBoxException {
+    double distanceTo(BoundingBox bbx) {
         if (isEmpty() || bbx.isEmpty()) {
-            throw new IllegalStateException("Can't compute distance " +
-                    "between bounding boxes that" +
-                    "are empty");
+            return Double.NaN;
+//            throw new IllegalStateException("Can't compute distance " +
+//                    "between bounding boxes that " +
+//                    "are empty");
         }
         return Haversine.haversine(
                 Math.min(getCenterY(), bbx.getCenterY()),

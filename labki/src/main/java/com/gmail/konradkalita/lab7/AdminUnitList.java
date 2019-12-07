@@ -179,23 +179,18 @@ public class AdminUnitList {
         return buildSubUnitList(filterNeighbours(potentialNeighbours, unit, maxDistance));
     }
 
-    AdminUnitList getNeighboursLinear(AdminUnit needle, double maxDistance) {
-        return buildSubUnitList(filterNeighbours(units, needle, maxDistance));
+    AdminUnitList getNeighboursLinear(AdminUnit unit, double maxDistance) {
+        return buildSubUnitList(filterNeighbours(units, unit, maxDistance));
     }
 
     private List<AdminUnit> filterNeighbours(List<AdminUnit> list, AdminUnit unitForNeighbours, double maxDist) {
         return list.stream()
-                .filter(
-                        unit -> {
-                            try {
-                                return !unit.equals(unitForNeighbours)
-                                        && ((unit.adminLevel >= 8 && unit.bbox.distanceTo(unitForNeighbours.bbox) < maxDist)
-                                        || (unit.adminLevel < 8 && unit.bbox.intersects(unitForNeighbours.bbox)));
-                            } catch (GetCenterFromEmpyBoxException e) {
-                                e.printStackTrace();
-                            }
-                            return false; // if exception is thrown, return false
-                        })
+                .filter(unit -> !unit.equals(unitForNeighbours)
+                        && (
+                                (unit.adminLevel >= 8 && !Double.isNaN(unit.bbox.distanceTo(unitForNeighbours.bbox))
+                                        && unit.bbox.distanceTo(unitForNeighbours.bbox) < maxDist)
+                            || (unit.adminLevel < 8 && unit.bbox.intersects(unitForNeighbours.bbox))
+                ))
                 .collect(Collectors.toList());
     }
 
