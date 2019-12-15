@@ -4,35 +4,43 @@ import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 
 import java.awt.*;
+import java.awt.geom.AffineTransform;
 import java.util.ArrayList;
 import java.util.List;
 
 @AllArgsConstructor
 @NoArgsConstructor
 public class Tree implements XmasShape {
-    List<Branch> branches = new ArrayList<>();
-    List<Bubble> bubbles = new ArrayList<>();
+    int xTranslation;
+    int yTranslation;
+    List<Branch> branches;
 
-    int x1CordOfTheLowestBranch = 300;
-    int x2CordOfTheLowestBranch = 600;
-    int numberOfBranches = 5;
+    public Tree(int height, int windowWidth, int windowHeight) {
+        this.branches = new ArrayList<>();
+        Color color = Color.green;
 
-    public void draw(Graphics g) {
-        branches.forEach(branch -> branch.draw((Graphics2D) g));
-    }
+        for (int i = height - 1; i >= 0; i--) {
+            branches.add(new Branch(color, i + 1, height));
+        }
 
-    public void addBranch(Branch branch) {
-        branches.add(branch);
+        this.xTranslation = (windowWidth - Branch.WIDTH * height) / 2;
+        this.yTranslation = (windowHeight - Branch.HEIGHT * height) / 2;
     }
 
     @Override
     public void transform(Graphics2D g2d) {
-
+        System.out.println(xTranslation);
+        g2d.translate(xTranslation, yTranslation);
     }
 
     @Override
-    public void render(Graphics2D g2d) {
-        branches.forEach(b -> b.render(g2d));
-        bubbles.forEach(b -> b.render(g2d));
+    public void render(Graphics2D g2d) {}
+
+    @Override
+    public void draw(Graphics2D g2d) {
+        AffineTransform saveAT = g2d.getTransform();
+        transform(g2d);
+        branches.forEach(branch -> branch.draw(g2d));
+        g2d.setTransform(saveAT);
     }
 }
