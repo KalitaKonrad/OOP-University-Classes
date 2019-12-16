@@ -1,46 +1,57 @@
 package com.gmail.konradkalita.lab10;
 
-import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
-
 import java.awt.*;
-import java.awt.geom.AffineTransform;
 import java.util.ArrayList;
 import java.util.List;
 
-@AllArgsConstructor
-@NoArgsConstructor
 public class Tree implements XmasShape {
-    int xTranslation;
-    int yTranslation;
-    List<Branch> branches;
 
-    public Tree(int height, int windowWidth, int windowHeight) {
-        this.branches = new ArrayList<>();
-        Color color = Color.green;
+    int n; // number of tree branches
+    int x; // x pos to translate
+    int y; // y pos to translate
+    double scale; // scale to translate
 
-        for (int i = height - 1; i >= 0; i--) {
-            branches.add(new Branch(color, i + 1, height));
+    final double h; // distance between each branches in Y axis
+    final double s; // helping constant for each tree geometry
+    final double k; // scale helping constant
+
+    List<Branch> branches = new ArrayList<>(); // list of n branches
+
+    public Tree(int x, int y, double scale,int n){
+        this.n = n ;
+        this.x = x;
+        this.y = y;
+        this.scale = scale;
+
+        this.h = (double)100 / n;
+        this.k = 0.7 /n;
+
+        if(this.scale == 1){
+            this.s = 2;
+        } else {
+            this.s = Math.pow(2, 1 - this.scale);
         }
-
-        this.xTranslation = (windowWidth - Branch.WIDTH * height) / 2;
-        this.yTranslation = (windowHeight - Branch.HEIGHT * height) / 2;
     }
 
     @Override
-    public void transform(Graphics2D g2d) {
-        System.out.println(xTranslation);
-        g2d.translate(xTranslation, yTranslation);
+    public void render(Graphics2D g2d){
+        for(int i = n; i > 0; i--){
+            this.branches.add(new Branch(this.x + (int) (200 * this.k/(this.s * this.scale) * (n-i)),
+                    (int)(this.y + h * this.scale * i),
+                    this.scale - k * this.scale * (n-i),
+                    0.7 - 0.5 * i /n));
+        }
     }
 
     @Override
-    public void render(Graphics2D g2d) {}
+    public void transform(Graphics2D g2d){
+        g2d.translate(x,y);
+        g2d.scale(scale,scale);
+    }
 
     @Override
-    public void draw(Graphics2D g2d) {
-        AffineTransform saveAT = g2d.getTransform();
-        transform(g2d);
-        branches.forEach(branch -> branch.draw(g2d));
-        g2d.setTransform(saveAT);
+    public void draw(Graphics2D g2d){
+        XmasShape.super.draw(g2d);
+        branches.forEach(b -> b.draw(g2d));
     }
 }

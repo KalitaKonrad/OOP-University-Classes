@@ -1,40 +1,62 @@
 package com.gmail.konradkalita.lab10;
 
+
 import javax.swing.*;
 import java.awt.*;
+import java.awt.geom.AffineTransform;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 public class DrawPanel extends JPanel {
 
-    int width;
-    int height;
-    List<XmasShape> shapes;
+    List<XmasShape> shapes = new ArrayList<>();
 
-    public DrawPanel(int width, int height) {
-        this.width = width;
-        this.height = height;
-        this.shapes = new ArrayList<>();
-        shapes.add(new Tree(4, width, height));
+    public DrawPanel(){
+        setBackground(new Color(100, 0, 100));
+        Random random = new Random();
+        for(int i=0; i < 100; i++){
+            shapes.add(new Bubble(
+                    random.nextInt(1000),
+                    random.nextInt(700),
+                    Math.random() * (0.03) + 0.04,
+                    Color.WHITE));
+        }
+
+        for(int i = 0; i < 100; i++){
+            shapes.add(new Star(random.nextInt(1000),
+                    random.nextInt(700),
+                    Math.random() * (0.02) + 0.06,
+                    5,Color.WHITE,Color.ORANGE,
+                    Math.random() * (Math.PI)));
+        }
+
+        shapes.add(new TreeTrunk(450,550,2));
+        shapes.add(new Tree(200,0,3,5));
+        shapes.add(new Star(480,60,0.7,7,new Color(240, 196, 1)));
+
+        shapes.add(new Star(350,350,0.3,6,Color.PINK,Color.MAGENTA));
+        shapes.add(new Star(600,350,0.25,4,Color.PINK,Color.ORANGE, Math.PI / -2));
+        shapes.add(new Star(450,480,0.3,6,Color.BLUE,Color.MAGENTA));
+        shapes.add(new Star(500,180,0.25,7,Color.MAGENTA,Color.ORANGE));
+        shapes.add(new Star(500,480,0.25,5,Color.PINK,Color.MAGENTA));
+        shapes.add(new Star(600,300,0.3,9,Color.RED,Color.MAGENTA));
+        shapes.add(new Star(440,300,0.3,8,Color.PINK,Color.MAGENTA));
+        shapes.add(new Star(700,500,0.30,6,Color.RED));
+        shapes.add(new Star(650,480,0.30,5,Color.MAGENTA,Color.ORANGE,Math.PI /2));
+
+        shapes.add(new Bubble(400,200,0.3));
+        shapes.add(new Bubble(550,480,0.4,new Color(235, 40, 20)));
+        shapes.add(new Bubble(300,450,0.4,new Color(80, 40, 235)));
+        shapes.add(new Bubble(400,350,0.4,new Color(240, 10, 130)));
+        shapes.add(new Bubble(530,230,0.3,new Color(230, 235, 35)));
+
+        shapes.add(new Light(500,350,0.5));
+        shapes.add(new Light(330,250,0.4,Color.YELLOW));
     }
 
-    @Override
-    protected void paintComponent(Graphics g) {
+    public void paintComponent(Graphics g){
         super.paintComponent(g);
-        Graphics2D g2d = (Graphics2D) g;
-
-        setBackgroundColor(g2d);
-        shapes.forEach(shape -> shape.draw(g2d));
-    }
-
-    private void setBackgroundColor(Graphics2D g2d) {
-        g2d.setRenderingHint(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY);
-        int w = getWidth();
-        int h = getHeight();
-        Color color1 = Color.PINK;
-        Color color2 = Color.lightGray;
-        GradientPaint gp = new GradientPaint(0, 0, color1, 0, h, color2);
-        g2d.setPaint(gp);
-        g2d.fillRect(0, 0, w, h);
+        shapes.forEach(s -> s.draw((Graphics2D) g));
     }
 }
