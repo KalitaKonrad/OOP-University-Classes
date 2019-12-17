@@ -6,16 +6,16 @@ import java.util.List;
 
 public class Tree implements XmasShape {
 
-    int n; // number of tree branches
-    int x; // x pos to translate
-    int y; // y pos to translate
-    double scale; // scale to translate
+    int n;
+    int x;
+    int y;
+    double scale;
 
-    final double h; // distance between each branches in Y axis
-    final double s; // helping constant for each tree geometry
-    final double k; // scale helping constant
+    final double h;
+    final double s;
+    final double k;
 
-    List<Branch> branches = new ArrayList<>(); // list of n branches
+    List<Branch> branches = new ArrayList<>();
 
     public Tree(int x, int y, double scale,int n){
         this.n = n ;
@@ -24,7 +24,7 @@ public class Tree implements XmasShape {
         this.scale = scale;
 
         this.h = (double)100 / n;
-        this.k = 0.7 /n;
+        this.k = 0.7 / n;
 
         if(this.scale == 1){
             this.s = 2;
@@ -39,7 +39,7 @@ public class Tree implements XmasShape {
             this.branches.add(new Branch(this.x + (int) (200 * this.k/(this.s * this.scale) * (n-i)),
                     (int)(this.y + h * this.scale * i),
                     this.scale - k * this.scale * (n-i),
-                    0.7 - 0.5 * i /n));
+                    0.7 - 0.5 * i / n));
         }
     }
 

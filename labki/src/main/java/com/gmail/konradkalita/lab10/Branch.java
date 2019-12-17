@@ -4,13 +4,13 @@ import java.awt.*;
 
 public class Branch implements XmasShape {
 
-    int[] pointsX = new int[]{0,100,200,166,133,100,66,33}; // points with verticles of the polygon
+    int[] pointsX = new int[]{0,100,200,166,133,100,66,33};
     int[] pointsY = new int[]{80,0,80,95,80,95,80,95};
 
-    int x; // x pos to translate
-    int y; // y pos to translate
-    double scale; // scale to translate
-    double gradient = 0.6; // gradient lvl constant
+    int x;
+    int y;
+    double scale;
+    double gradient = 0.6;
 
     Color gradColor1 = new Color(0,240, 0);
     Color gradColor2 =  new Color(0,(int)(240 * this.gradient) ,0);

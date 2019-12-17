@@ -6,18 +6,18 @@ import java.awt.*;
  */
 public class Star implements XmasShape {
 
-    int[] pointsX; // points with vertices of the polygon
+    int[] pointsX;
     int[] pointsY;
 
-    int x; // x pos to translate
-    int y; // y pos to translate
-    double scale; // scale to translate
+    int x;
+    int y;
+    double scale;
 
-    int n; // number of vertices
-    final double Radius = 100; // Radius of the star
-    final double radius = 35; // help constant
-    double angle; // angle between each vert in radians
-    double rotation = 0; // rotation angle in radians
+    int n;
+    final double Radius = 100;
+    final double radius = 35;
+    double angle;
+    double rotation = 0;
 
     Color gradColor1 = Color.orange;
     Color gradColor2 = Color.orange;
@@ -57,7 +57,8 @@ public class Star implements XmasShape {
             this.pointsX[2*i] = (int)(this.Radius * Math.cos(this.angle * i - Math.PI /2 + this.rotation));
             this.pointsX[2*i + 1] = (int)(this.radius * Math.cos(this.angle * i + this.angle/2 - Math.PI /2 + this.rotation));
             this.pointsY[2*i] = (int)(this.Radius * Math.sin(this.angle * i - Math.PI /2 + this.rotation));
-            this.pointsY[2*i+1] = (int)(this.radius * Math.sin(this.angle * i + this.angle/2 - Math.PI /2 + this.rotation));
+            this.pointsY[2*i + 1] =
+                    (int)(this.radius * Math.sin(this.angle * i + this.angle/2 - Math.PI /2 + this.rotation));
         }
         GradientPaint grad = new GradientPaint(0,0,gradColor1,0,100,gradColor2);
 
