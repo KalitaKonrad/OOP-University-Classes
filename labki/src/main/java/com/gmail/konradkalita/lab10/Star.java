@@ -1,9 +1,7 @@
 package com.gmail.konradkalita.lab10;
 
 import java.awt.*;
-/*
-    This class can be used as Light on the XMas Tree as well.
- */
+
 public class Star implements XmasShape {
 
     int[] pointsX;
