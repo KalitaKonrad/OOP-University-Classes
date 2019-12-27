@@ -15,7 +15,7 @@ public class DrawPanel extends JPanel {
     public DrawPanel(){
         setBackground(new Color(100, 0, 100));
         Random random = new Random();
-        for(int i=0; i < 100; i++){
+        for(int i = 0; i < 100; i++){
             shapes.add(new Bubble(
                     random.nextInt(1000),
                     random.nextInt(700),

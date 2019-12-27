@@ -4,15 +4,15 @@ import java.awt.*;
 
 public class TreeTrunk implements XmasShape {
 
-    int[] pointsX = new int[]{0,50,50,0}; //  verticles points of the polygon
-    int[] pointsY = new int[]{0,0,100,100};
+    int[] pointsX = new int[]{0, 50, 50, 0};
+    int[] pointsY = new int[]{-50, -50, 150, 150};
 
-    int x; // x pos to translate
-    int y; // y pos to translate
-    double scale; // scale to translate
+    int x;
+    int y;
+    double scale;
 
-    Color gradColor1 = new Color(61, 29, 7);
-    Color gradColor2 = new Color(140, 57, 20);
+    Color gradColor1 = new Color(65, 30, 10);
+    Color gradColor2 = new Color(150, 60, 30);
 
     public TreeTrunk(int x, int y, double scale){
         this.x = x;
@@ -37,8 +37,8 @@ public class TreeTrunk implements XmasShape {
 
         GradientPaint grad = new GradientPaint(0,0,gradColor1,0,100, gradColor2);
         g2d.setPaint(grad);
-        g2d.fillPolygon(pointsX,pointsY,pointsX.length);
-        g2d.drawPolygon(pointsX,pointsY,pointsX.length);
+        g2d.fillPolygon(pointsX, pointsY, pointsX.length);
+        g2d.drawPolygon(pointsX, pointsY, pointsX.length);
     }
 
     @Override

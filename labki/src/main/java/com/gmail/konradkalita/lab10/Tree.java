@@ -6,40 +6,38 @@ import java.util.List;
 
 public class Tree implements XmasShape {
 
-    int n;
+    int numberOfBranches;
     int x;
     int y;
     double scale;
-
-    final double h;
-    final double s;
-    final double k;
-
+    double distanceBetweenBranchesY;
+    double constant;
+    double scaleConstant;
     List<Branch> branches = new ArrayList<>();
 
-    public Tree(int x, int y, double scale,int n){
-        this.n = n ;
+    public Tree(int x, int y, double scale,int numberOfBranches){
+        this.numberOfBranches = numberOfBranches;
         this.x = x;
         this.y = y;
         this.scale = scale;
-
-        this.h = (double)100 / n;
-        this.k = 0.7 / n;
+        this.distanceBetweenBranchesY = (double)100 / numberOfBranches;
+        this.scaleConstant = 0.7 / numberOfBranches;
 
         if(this.scale == 1){
-            this.s = 2;
+            this.constant = 2;
         } else {
-            this.s = Math.pow(2, 1 - this.scale);
+            this.constant = Math.pow(2, 1 - this.scale);
         }
     }
 
     @Override
     public void render(Graphics2D g2d){
-        for(int i = n; i > 0; i--){
-            this.branches.add(new Branch(this.x + (int) (200 * this.k/(this.s * this.scale) * (n-i)),
-                    (int)(this.y + h * this.scale * i),
-                    this.scale - k * this.scale * (n-i),
-                    0.7 - 0.5 * i / n));
+        for(int i = numberOfBranches; i > 0; i--){
+            this.branches.add(new Branch(this.x + (int) (200 * this.scaleConstant / (this.constant * this.scale) * (
+                    numberOfBranches - i)),
+                    (int)(this.y + distanceBetweenBranchesY * this.scale * i),
+                    this.scale - scaleConstant * this.scale * (numberOfBranches - i),
+                    0.7 - 0.5 * i / numberOfBranches));
         }
     }
 
