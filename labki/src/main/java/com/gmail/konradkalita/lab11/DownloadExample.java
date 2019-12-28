@@ -6,21 +6,57 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
 import java.util.Locale;
+import java.util.concurrent.Semaphore;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class DownloadExample {
+
+    private enum TYPE {
+        SEQUENTIAL,
+        CONCURRENT,
+        ATOMIC_LOCK,
+        SEMAPHORE
+    }
+
+    public static void main(String[] args) throws InterruptedException {
+        System.out.println("Sequential download");
+        sequentialDownload();
+
+        System.out.println("Concurrent download");
+        concurrentDownload();
+
+        System.out.println("Concurrent download 2");
+        concurrentDownload2();
+
+        System.out.println("Concurrent download 3");
+        concurrentDownload3();
+    }
+
     static String [] toDownload = {
             "http://home.agh.edu.pl/pszwed/wyklad-c/01-jezyk-c-intro.pdf",
             "http://home.agh.edu.pl/~pszwed/wyklad-c/02-jezyk-c-podstawy-skladni.pdf",
             "http://home.agh.edu.pl/~pszwed/wyklad-c/03-jezyk-c-instrukcje.pdf",
-            "http://home.agh.edu.pl/~pszwed/wyklad-c/04-jezyk-c-funkcje.pdf",
-            "http://home.agh.edu.pl/~pszwed/wyklad-c/05-jezyk-c-deklaracje-typy.pdf",
+//            "http://home.agh.edu.pl/~pszwed/wyklad-c/04-jezyk-c-funkcje.pdf",
+//            "http://home.agh.edu.pl/~pszwed/wyklad-c/05-jezyk-c-deklaracje-typy.pdf",
+//            "http://home.agh.edu.pl/~pszwed/wyklad-c/06-jezyk-c-wskazniki.pdf",
+//            "http://home.agh.edu.pl/~pszwed/wyklad-c/07-jezyk-c-operatory.pdf",
+//            "http://home.agh.edu.pl/~pszwed/wyklad-c/08-jezyk-c-lancuchy-znakow.pdf",
+//            "http://home.agh.edu.pl/~pszwed/wyklad-c/09-jezyk-c-struktura-programow.pdf",
+//            "http://home.agh.edu.pl/~pszwed/wyklad-c/10-jezyk-c-dynamiczna-alokacja-pamieci.pdf",
+//            "http://home.agh.edu.pl/~pszwed/wyklad-c/11-jezyk-c-biblioteka-we-wy.pdf",
+//            "http://home.agh.edu.pl/~pszwed/wyklad-c/preprocesor-make-funkcje-biblioteczne.pdf"
     };
+
+    static AtomicInteger count = new AtomicInteger(0);
+    static Semaphore semaphore = new Semaphore(0);
 
     static class Downloader implements Runnable {
         private final String url;
+        private final TYPE type;
 
-        Downloader(String url){
+        Downloader(String url, TYPE type){
             this.url = url;
+            this.type = type;
         }
 
         public void run(){
@@ -37,13 +73,15 @@ public class DownloadExample {
                 e.printStackTrace();
             }
             System.out.println("Done: " + fileName);
+            if (type == TYPE.ATOMIC_LOCK) count.incrementAndGet();
+            else if (type == TYPE.SEMAPHORE) semaphore.release();
         }
     }
 
     static void sequentialDownload(){
         double t1 = System.nanoTime()/1e6;
         for(String url : toDownload){
-            new Downloader(url).run();
+            new Downloader(url, TYPE.SEQUENTIAL).run();
         }
         double t2 = System.nanoTime()/1e6;
         System.out.printf(Locale.US,"t2-t1=%f\n",t2-t1);
@@ -52,8 +90,36 @@ public class DownloadExample {
     static void concurrentDownload(){
         double t1 = System.nanoTime()/1e6;
         for(String url : toDownload){
-            // uruchom Downloader jako wątek...
+            new Thread(new Downloader(url, TYPE.CONCURRENT)).start();
         }
+        double t2 = System.nanoTime()/1e6;
+        System.out.printf(Locale.US,"t2-t1=%f\n",t2-t1);
+    }
+
+    static void concurrentDownload2() {
+        double t1 = System.nanoTime()/1e6;
+
+        for (String url : toDownload) {
+            new Thread(new Downloader(url, TYPE.ATOMIC_LOCK)).start();
+        }
+
+        while (count.get() != toDownload.length) {
+            Thread.yield();
+        }
+
+        double t2 = System.nanoTime()/1e6;
+        count.set(0); // resets the count
+        System.out.printf(Locale.US,"t2-t1=%f\n",t2-t1);
+    }
+
+    static void concurrentDownload3() throws InterruptedException {
+        double t1 = System.nanoTime()/1e6;
+
+        for (String url : toDownload) {
+            new Thread(new Downloader(url, TYPE.SEMAPHORE)).start();
+        }
+        semaphore.acquire(toDownload.length);
+
         double t2 = System.nanoTime()/1e6;
         System.out.printf(Locale.US,"t2-t1=%f\n",t2-t1);
     }
