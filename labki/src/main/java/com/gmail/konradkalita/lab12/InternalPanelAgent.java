@@ -28,14 +28,8 @@ public class InternalPanelAgent extends Thread {
       InternalCall ic = input.take();
       int currentFloor = elevatorCar.getFloor();
       if (currentFloor < ic.toFloor) {
-        elevatorCar.movementState = ElevatorCar.Movement.MOVING;
-        elevatorCar.tour = ElevatorCar.Tour.UP;
-        elevatorCar.floor = ic.toFloor; // ???
         ElevatorStops.get().setLiftStopUp(ic.toFloor);
       } else if (currentFloor > ic.toFloor) {
-        elevatorCar.movementState = ElevatorCar.Movement.MOVING;
-        elevatorCar.tour = ElevatorCar.Tour.DOWN;
-        elevatorCar.floor = ic.toFloor;
         ElevatorStops.get().setLiftStopDown(ic.toFloor);
       }
     }

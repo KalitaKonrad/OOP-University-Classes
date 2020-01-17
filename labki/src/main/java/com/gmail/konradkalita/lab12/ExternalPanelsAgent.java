@@ -8,6 +8,11 @@ import java.util.concurrent.BlockingQueue;
 public class ExternalPanelsAgent extends Thread {
 
   private final ElevatorCar elevatorCar;
+  BlockingQueue<ExternalCall> input = new ArrayBlockingQueue<ExternalCall>(100);
+
+  ExternalPanelsAgent(ElevatorCar elevatorCar) {
+    this.elevatorCar = elevatorCar;
+  }
 
   static class ExternalCall {
     private final int atFloor;
@@ -17,12 +22,6 @@ public class ExternalPanelsAgent extends Thread {
       this.atFloor = atFloor;
       this.directionUp = directionUp;
     }
-  }
-
-  BlockingQueue<ExternalCall> input = new ArrayBlockingQueue<ExternalCall>(100);
-
-  ExternalPanelsAgent(ElevatorCar elevatorCar) {
-    this.elevatorCar = elevatorCar;
   }
 
   @SneakyThrows

@@ -29,8 +29,12 @@ public class Elevator {
 
   public static void main(String[] args) throws InterruptedException {
     init();
-    makeExternalCall(4, false);
+    makeExternalCall(2, false);
     Thread.sleep(100);
-    makeInternalCall(2);
+    makeExternalCall(3, false);
+
+    //    Thread.sleep(100);
+    //    makeInternalCall(2);
+    //    makeExternalCall(0, false);
   }
 }
