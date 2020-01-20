@@ -64,7 +64,7 @@ public class ElevatorCar extends Thread {
           System.out.println("Floor" + floor);
         } else {
           movementState = Movement.STOP;
-          tour = Tour.DOWN; // or Tour.UP?
+          tour = Tour.DOWN;
         }
 
         if (ElevatorStops.get().whileMovingUpShouldStopAt(floor)
@@ -73,7 +73,6 @@ public class ElevatorCar extends Thread {
           ElevatorStops.get().clearStopUp(floor);
           System.out.println("STOP");
         }
-        continue;
       }
     }
   }

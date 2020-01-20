@@ -29,12 +29,27 @@ public class Elevator {
 
   public static void main(String[] args) throws InterruptedException {
     init();
-    makeExternalCall(2, false);
-    Thread.sleep(100);
-    makeExternalCall(3, false);
 
+    System.out.println("=== 1 ===");
+    makeInternalCall(4);
+    makeInternalCall(7);
+    makeExternalCall(6, false);
+    Thread.sleep(10000);
+    makeInternalCall(1);
+    makeExternalCall(3, true);
+
+    //    System.out.println("=== 2 ===");
+    //    makeExternalCall(2, true);
+    //    makeExternalCall(3, false);
+    //    makeExternalCall(8, true);
+
+    //    System.out.println("=== 3 ===");
+    //    makeExternalCall(1, true);
     //    Thread.sleep(100);
+    //    makeInternalCall(7);
+    //    Thread.sleep(100);
+    //    makeExternalCall(5,true);
+    //    makeExternalCall(6,false);
     //    makeInternalCall(2);
-    //    makeExternalCall(0, false);
   }
 }
