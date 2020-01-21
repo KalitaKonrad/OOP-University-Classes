@@ -3,9 +3,7 @@ package com.gmail.konradkalita.kolos;
 import com.gmail.konradkalita.lab6.CSVReader;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class Police {
@@ -61,6 +59,16 @@ public class Police {
     return policeUnits.stream().filter(unit -> unit.fax.equals("")).collect(Collectors.toList());
   }
 
+  public Map<String, Integer> task4() {
+    Map<String, Integer> output = new HashMap<>();
+    policeUnits.forEach(
+        unit -> {
+          int count = output.getOrDefault(unit.rodzaj, 0);
+          output.put(unit.rodzaj, count + 1);
+        });
+    return output;
+  }
+
   public static void main(String[] args) {
     Police police = new Police();
     police.readData();
@@ -71,5 +79,8 @@ public class Police {
     police.task2().forEach(System.out::println);
     System.out.println("===== 3 ======");
     police.task3().forEach(System.out::println);
+    System.out.println("===== 4 ======");
+    Map<String, Integer> occurences = police.task4();
+    occurences.forEach((key, value) -> System.out.println(key + " occured: " + value + " times"));
   }
 }
