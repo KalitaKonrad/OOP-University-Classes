@@ -33,25 +33,33 @@ public class Zad2 {
 
     @SneakyThrows
     public void run() {
+      // 10 ... 20 -> 80 ... 90 ->
+      int[] subarray = subArray(array, array.length - end, array.length - start);
       int counter = 0;
-      for (int i = start; i < start + (end - start) / 2; i++) {
-        int tmp = array[start + counter];
-        array[start + counter] = array[end - counter - 1];
-        array[end - counter - 1] = tmp;
+      for (int i = array.length - end; i < array.length - start; i++) {
+        array[i] = array[end - counter - 1];
         counter++;
       }
-      // semaphore.release();
+
+      counter = 0;
+      // 10 ... 20 <- 80 ... 90
+      for (int i = start; i < end; i++) {
+        array[i] = subarray[subarray.length - 1 - counter];
+        counter++;
+      }
+
+      semaphore.release(); // zdejmuje z semafora
     }
   }
 
   static void parrarelReverse(int threadCount) throws InterruptedException {
     ArrayReverse[] threads = new ArrayReverse[threadCount];
     int threadArraySize = array.length / threadCount;
-    // semaphore.acquire(threadCount);
+    System.out.println();
+    semaphore.acquire(threadCount); // nakladam semafor na ilosc threadCount watkow
 
     for (int i = 0; i < threadCount; i++) {
       threads[i] = new ArrayReverse(i * threadArraySize, (i + 1) * threadArraySize);
-      System.out.println(i * threadArraySize + " " + (i + 1) * threadArraySize);
     }
 
     double t1 = System.nanoTime() / 1e6;
@@ -71,11 +79,15 @@ public class Zad2 {
       newTestArray[i] = elementsCount - i - 1;
     }
     Zad2 zad2 = new Zad2(elementsCount);
-    zad2.parrarelReverse(threadCount);
+    parrarelReverse(threadCount);
 
-    for (int i = 0; i < array.length; i++) {
-      System.out.println(array[i]);
-    }
+    //    for (int i = 0; i < array.length; i++) {
+    //      System.out.println(array[i]);
+    //    }
+    //    for (int i = 0; i < array.length; i++) {
+    //      System.out.println(newTestArray[i]);
+    //    }
+
     System.out.println(test(newTestArray, array));
   }
 }
